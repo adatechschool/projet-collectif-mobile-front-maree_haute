@@ -2,23 +2,30 @@ import { StyleSheet, Text, View } from "react-native";
 import { Stack, Tabs } from "expo-router";
 import React, { useState, useEffect } from "react";
 
+const TOKEN=process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
+const AIRTABLE_URL=process.env.EXPO_PUBLIC_AIRTABLE_URL;
 export default function Page() {
+  console.log(TOKEN);
+  console.log(AIRTABLE_URL);
   const [data, setData] = useState([]);
+ //appelle la BDD
   const fetchData = async () => {
     const response = await fetch(
-      "https://api.airtable.com/v0/appfYZhtggrzhPbaz/Surf%20Destinations?&view=By%20Surf%20Break",
+     AIRTABLE_URL,
       {
         method: "GET",
         headers: {
-          Authorization:
-            "Bearer patI2bxmroBSEpdLF.80f18186cf70c1bd9380a09de6dee32300da1b6a3a241c775f555f91c16facb6",
+          Authorization:TOKEN
+            
         },
       }
     );
-    const data = await response.json();
-    const records = data.records.map((record) => record.fields);
+    const fetchedData = await response.json();
+    //record.fields-> cherche les valeurs corrrespondantes à la clé fields du tableau data
+    const records = fetchedData.records.map((record) => record.fields);
     console.log(records);
     setData(records);
+
   };
 
   useEffect(() => {
