@@ -1,7 +1,8 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { Stack, Tabs } from "expo-router";
+import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import ListItem from "../components/ListItem";
+import { Link } from "expo-router";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -33,15 +34,17 @@ export default function Page() {
       <View style={styles.main}>
         {data.map((record, index) => {
           return (
-            <ListItem
-              key={index}
-              imageURL={record.Photos[0].url}
-              destination={record.Destination}
-              destinationCountry={record["Destination State/Country"]}
-              difficulty={record["Difficulty Level"]}
-              startSeason={record["Peak Surf Season Begins"]}
-              endSeason={record["Peak Surf Season Ends"]}
-            />
+            <Link href={{ pathname: "/spot/[id]", params: { id: index } }}>
+              <ListItem
+                key={index}
+                imageURL={record.Photos[0].url}
+                destination={record.Destination}
+                destinationCountry={record["Destination State/Country"]}
+                difficulty={record["Difficulty Level"]}
+                startSeason={record["Peak Surf Season Begins"]}
+                endSeason={record["Peak Surf Season Ends"]}
+              />
+            </Link>
           );
         })}
       </View>
