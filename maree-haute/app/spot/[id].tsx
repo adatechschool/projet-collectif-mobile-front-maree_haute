@@ -5,33 +5,32 @@ export default function Spot() {
   const { id } = useLocalSearchParams();
   const { imageURL } = useLocalSearchParams();
   const { destination } = useLocalSearchParams();
-  const { destinationCountry }= useLocalSearchParams();
-  const { difficulty }= useLocalSearchParams();
-  const { startSeason }= useLocalSearchParams();
-  const { endSeason }= useLocalSearchParams();
-  const { description }= useLocalSearchParams();
+  const { destinationCountry } = useLocalSearchParams();
+  const { difficulty } = useLocalSearchParams();
+  const { startSeason } = useLocalSearchParams();
+  const { endSeason } = useLocalSearchParams();
+  const { description } = useLocalSearchParams();
+  console.log("id", imageURL);
 
-  
   return (
     <View>
       <Text>ID: {id}</Text>
       <Image
         style={styles.image}
         source={{
-          uri: imageURL,
+          uri: imageURL.toString(),
         }}
       />
       <Text>{destination}</Text>
       <Text>{destinationCountry}</Text>
-      <Text> difficulty level{ difficulty }</Text>
-      <Text>{ startSeason }</Text>
-      <Text>{ endSeason }</Text>
-      <Text>{ description }</Text>
+      <Text> difficulty level{difficulty}</Text>
+      <Text>{startSeason}</Text>
+      <Text>{endSeason}</Text>
+      <Text>{description}</Text>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  
   image: {
     width: "100%",
     height: 100,
