@@ -3,28 +3,37 @@ import { useLocalSearchParams } from "expo-router";
 
 export default function Spot() {
   const { id } = useLocalSearchParams();
+  const { imageURL } = useLocalSearchParams();
+  const { destination } = useLocalSearchParams();
+  const { destinationCountry }= useLocalSearchParams();
+  const { difficulty }= useLocalSearchParams();
+  const { startSeason }= useLocalSearchParams();
+  const { endSeason }= useLocalSearchParams();
+  const { description }= useLocalSearchParams();
 
-  // const fetchData = async () => {
-  //   const response = await fetch(AIRTABLE_URL, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: TOKEN,
-  //     },
-  //   });
-  //   const fetchedData = await response.json();
-  //   //record.fields-> cherche les valeurs corrrespondantes à la clé fields du tableau data
-  //   const records = fetchedData.records.map((record) => record.fields);
-  //   // console.log(records);
-  //   setData(records);
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  
   return (
     <View>
       <Text>ID: {id}</Text>
-      <Text>BONJOUR !</Text>
+      <Image
+        style={styles.image}
+        source={{
+          uri: imageURL,
+        }}
+      />
+      <Text>{destination}</Text>
+      <Text>{destinationCountry}</Text>
+      <Text> difficulty level{ difficulty }</Text>
+      <Text>{ startSeason }</Text>
+      <Text>{ endSeason }</Text>
+      <Text>{ description }</Text>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  
+  image: {
+    width: "100%",
+    height: 100,
+  },
+});
