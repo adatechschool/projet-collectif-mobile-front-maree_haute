@@ -2,14 +2,17 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
 export default function Spot() {
-  const { id } = useLocalSearchParams();
-  const { imageURL } = useLocalSearchParams();
-  const { destination } = useLocalSearchParams();
-  const { destinationCountry } = useLocalSearchParams();
-  const { difficulty } = useLocalSearchParams();
-  const { startSeason } = useLocalSearchParams();
-  const { endSeason } = useLocalSearchParams();
-  const { description } = useLocalSearchParams();
+  const {
+    id,
+    imageURL,
+    destination,
+    destinationCountry,
+    difficulty,
+    startSeason,
+    endSeason,
+    description,
+  } = useLocalSearchParams();
+
   console.log("id", imageURL);
 
   return (
