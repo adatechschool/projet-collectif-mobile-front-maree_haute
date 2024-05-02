@@ -1,5 +1,14 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 
+interface Props {
+  imageURL: string;
+  destination: string;
+  destinationCountry: string;
+  difficulty: string;
+  startSeason: string;
+  endSeason: string;
+}
+
 export default function ListItem({
   imageURL,
   destination,
@@ -7,7 +16,7 @@ export default function ListItem({
   difficulty,
   startSeason,
   endSeason,
-}) {
+}: Props) {
   console.log(imageURL);
   return (
     <View>
