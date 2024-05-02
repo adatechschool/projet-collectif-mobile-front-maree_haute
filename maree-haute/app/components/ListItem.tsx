@@ -16,8 +16,8 @@ export default function ListItem({
   difficulty,
   startSeason,
   endSeason,
-}: Props) {
-  // console.log(imageURL);
+} :Props) {
+  
   return (
     <View>
       <Image
