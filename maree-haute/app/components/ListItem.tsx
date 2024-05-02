@@ -17,7 +17,7 @@ export default function ListItem({
   startSeason,
   endSeason,
 }: Props) {
-  console.log(imageURL);
+  // console.log(imageURL);
   return (
     <View>
       <Image

@@ -7,8 +7,8 @@ import { Link } from "expo-router";
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
 export default function Page() {
-  console.log(TOKEN);
-  console.log(AIRTABLE_URL);
+  // console.log(TOKEN);
+  // console.log(AIRTABLE_URL);
   const [data, setData] = useState([]);
   //appelle la BDD
   const fetchData = async () => {
@@ -21,7 +21,7 @@ export default function Page() {
     const fetchedData = await response.json();
     //record.fields-> cherche les valeurs corrrespondantes à la clé fields du tableau data
     const records = fetchedData.records.map((record) => record.fields);
-    console.log(records);
+    // console.log(records);
     setData(records);
   };
 
