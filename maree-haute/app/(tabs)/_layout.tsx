@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Tabs, Stack } from "expo-router";
 
 export default function TabLayout() {
   return (
@@ -16,7 +16,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="mySpots"
         options={{
           title: "My spots",
           tabBarIcon: ({ color }) => (
@@ -25,6 +25,25 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="cog" color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      {/* <Tabs.Screen
+        name="modal"
+        options={{
+          href: null,
+          title: "Settings",
+          // presentation: 'modal',
+          headerShown: false,
+        }}
+      /> */}
     </Tabs>
   );
 }
