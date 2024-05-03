@@ -34,7 +34,6 @@ export default function Page() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.main}>
-        <Link href="/testmodal/TestPage">Test page</Link>
         {data.map((record) => {
           return (
             <Link

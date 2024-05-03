@@ -5,7 +5,7 @@ export default function MySpots() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
-      <Link href="/modal">Present modal</Link>
+      <Link href="../modals/modalCreateSpot">Here is my modal !</Link>
     </View>
   );
 }
