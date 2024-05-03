@@ -8,7 +8,6 @@ const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
 
 export default function Page() {
-
   const [data, setData] = useState([]);
   //appelle la BDD
   const fetchData = async () => {
@@ -19,12 +18,13 @@ export default function Page() {
       },
     });
     const fetchedData = await response.json();
-   
-   //record-> correspond à spot avec ses informations
-  const record = fetchedData.records.map((spot)=> {return spot})
-  // console.log("texte", record)
+
+    //record-> correspond à spot avec ses informations
+    const record = fetchedData.records.map((spot) => {
+      return spot;
+    });
+    // console.log("texte", record)
     setData(record);
-    
   };
 
   useEffect(() => {
@@ -36,15 +36,23 @@ export default function Page() {
       <View style={styles.main}>
         {data.map((record) => {
           return (
-            <Link href={{ pathname: "/spot/[id]", params: { id: record.id, 
-              imageURL: record.fields.Photos[0].url,
-              destination: record.fields.Destination,
-              destinationCountry: record.fields["Destination State/Country"],
-              difficulty: record.fields["Difficulty Level"],
-              startSeason: record.fields["Peak Surf Season Begins"],
-              endSeason: record.fields["Peak Surf Season Ends"],
-              description: record.fields.Description }}}>
-              
+            <Link
+              key={record.id}
+              href={{
+                pathname: "/spot/[id]",
+                params: {
+                  id: record.id,
+                  imageURL: record.fields.Photos[0].url,
+                  destination: record.fields.Destination,
+                  destinationCountry:
+                    record.fields["Destination State/Country"],
+                  difficulty: record.fields["Difficulty Level"],
+                  startSeason: record.fields["Peak Surf Season Begins"],
+                  endSeason: record.fields["Peak Surf Season Ends"],
+                  description: record.fields.Description,
+                },
+              }}
+            >
               <ListItem
                 key={record.id}
                 imageURL={record.fields.Photos[0].url}
