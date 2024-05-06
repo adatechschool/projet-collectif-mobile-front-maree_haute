@@ -1,4 +1,5 @@
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
+import { Button } from "react-native";
 export default function Layout() {
   return (
     <Stack>
@@ -12,8 +13,13 @@ export default function Layout() {
       <Stack.Screen
         name="modal"
         options={{
+          headerTransparent: true,
           // Set the presentation mode to modal for our modal route.
           presentation: "modal",
+          headerLeft: () => (
+            <Button onPress={() => router.back()} title="Cancel" />
+          ),
+          headerRight: () => <Button title="Submit" />,
         }}
       />
     </Stack>
