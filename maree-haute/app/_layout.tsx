@@ -7,15 +7,3 @@ export function AppLayout() {
     </Stack>
   );
 }
-
-export function AppModals() {
-  return (
-    <Stack.Screen
-      name="modal"
-      options={{
-        // Set the presentation mode to modal for our modal route.
-        presentation: "modal",
-      }}
-    />
-  );
-}

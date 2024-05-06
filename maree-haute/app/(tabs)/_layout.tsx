@@ -35,15 +35,6 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
-      {/* <Tabs.Screen
-        name="modal"
-        options={{
-          href: null,
-          title: "Settings",
-          // presentation: 'modal',
-          headerShown: false,
-        }}
-      /> */}
     </Tabs>
   );
 }
