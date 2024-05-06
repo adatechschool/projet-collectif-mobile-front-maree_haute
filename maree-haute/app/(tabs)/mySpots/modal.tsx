@@ -15,25 +15,23 @@ import SelectDropdown from "react-native-select-dropdown";
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
 const Airtable = require("airtable");
-var base = new Airtable({apiKey: TOKEN}).base('appfYZhtggrzhPbaz');
-
+var base = new Airtable({ apiKey: TOKEN }).base("appfYZhtggrzhPbaz");
 
 export default function Modal() {
   // Define state variables to hold form data
   const [destination, setDestination] = useState("");
   const [location, setLocation] = useState("");
-  const [difficultyLevel, setDifficultyLevel] = useState("");
+  const [difficultyLevel, setDifficultyLevel] = useState(0);
   const [surfBreak, setSurfBreak] = useState("");
   const [description, setDescription] = useState("");
 
-  const difficultyLevelOptions = {
-    "Novice" : 1,
-    "Beginner" : 2,
-    "Proficient" : 3,
-    "Advanced" : 4,
-    "Expert" : 5,
-  };
-  
+  const difficultyLevelOptions = [
+    "Novice",
+    "Beginner",
+    "Proficient",
+    "Advanced",
+    "Expert",
+  ];
 
   const surfBreakOptions = [
     "Reef Break",
@@ -53,42 +51,41 @@ export default function Modal() {
       description,
     });
     const difficultyValue = difficultyLevelOptions[difficultyLevel];
-    base('Surf Destinations').create([
-      {
-        "fields": {
-          "Destination": destination,
-          "Destination State/Country": location,
-          "Difficulty Level": difficultyLevel ,
-          "Surf Break": [
-            surfBreak
-          ],
-          "Photos": [
-            {
-              "url": ""
-            }
-          ],
-          "Peak Surf Season Begins": "",
-          "Peak Surf Season Ends": "",
-          "Magic Seaweed Link": "",
-          "Influencers": [
-            "",
-            ""
-          ],
-          "Geocode": "",
-          "Description": description
+    base("Surf Destinations").create(
+      [
+        {
+          fields: {
+            Destination: destination,
+            "Destination State/Country": location,
+            "Difficulty Level": difficultyLevel,
+            "Surf Break": ["Reef Break"],
+            Photos: [
+              {
+                url: "",
+              },
+            ],
+            "Peak Surf Season Begins": "",
+            "Peak Surf Season Ends": "",
+            "Magic Seaweed Link":
+              "https://magicseaweed.com/Pipeline-Backdoor-Surf-Report/616/",
+            Influencers: ["recl6pl7zOShNsf7A", "recJuj7XZvbXN5ZgV"],
+            Geocode:
+              "eyJpIjoiUGlwZWxpbmUsIE9haHUsIEhhd2FpaSIsIm8iOnsic3RhdHVzIjoiT0siLCJmb3JtYXR0ZWRBZGRyZXNzIjoiRWh1a2FpIEJlYWNoIFBhcmssIEhhbGVpd2EsIEhJIDk2NzEyLCBVbml0ZW...",
+            Description:
+              "Est cillum laboris labore Lorem aliquip culpa. Aliquip qui quis aute id ipsum veniam velit laborum. Irure aute do esse in in laborum elit ex. Amet mol...",
+          },
+        },
+      ],
+      function (err, records) {
+        if (err) {
+          console.error(err);
+          return;
         }
-      },
-     
-    ],function(err, records) {
-      if (err) {
-        console.error(err);
-        return;
+        records.forEach(function (record) {
+          console.log(record.getId());
+        });
       }
-      records.forEach(function (record) {
-        console.log(record.getId());
-      });
-    });
-
+    );
   };
 
   return (
@@ -108,7 +105,7 @@ export default function Modal() {
           <SelectDropdown
             data={difficultyLevelOptions}
             onSelect={(selectedItem, index) => {
-              setDifficultyLevel(selectedItem);
+              setDifficultyLevel(index + 1);
             }}
             renderButton={(selectedItem, isOpened) => {
               return (
