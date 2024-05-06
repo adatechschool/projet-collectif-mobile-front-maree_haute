@@ -12,6 +12,11 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
+const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
+const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
+const Airtable = require("airtable");
+var base = new Airtable({apiKey: TOKEN}).base('appfYZhtggrzhPbaz');
+
 
 export default function Modal() {
   // Define state variables to hold form data
@@ -21,13 +26,14 @@ export default function Modal() {
   const [surfBreak, setSurfBreak] = useState("");
   const [description, setDescription] = useState("");
 
-  const difficultyLevelOptions = [
-    "Beginner",
-    "Moderate",
-    "Intermediate",
-    "Advanced",
-    "Expert",
-  ];
+  const difficultyLevelOptions = {
+    "Novice" : 1,
+    "Beginner" : 2,
+    "Proficient" : 3,
+    "Advanced" : 4,
+    "Expert" : 5,
+  };
+  
 
   const surfBreakOptions = [
     "Reef Break",
@@ -46,6 +52,43 @@ export default function Modal() {
       surfBreak,
       description,
     });
+    const difficultyValue = difficultyLevelOptions[difficultyLevel];
+    base('Surf Destinations').create([
+      {
+        "fields": {
+          "Destination": destination,
+          "Destination State/Country": location,
+          "Difficulty Level": difficultyLevel ,
+          "Surf Break": [
+            surfBreak
+          ],
+          "Photos": [
+            {
+              "url": ""
+            }
+          ],
+          "Peak Surf Season Begins": "",
+          "Peak Surf Season Ends": "",
+          "Magic Seaweed Link": "",
+          "Influencers": [
+            "",
+            ""
+          ],
+          "Geocode": "",
+          "Description": description
+        }
+      },
+     
+    ],function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function (record) {
+        console.log(record.getId());
+      });
+    });
+
   };
 
   return (
