@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
-import ListItem from "../components/ListItem";
+import ListItem from "../../components/ListItem";
 import { Link } from "expo-router";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
@@ -40,7 +40,7 @@ export default function Page() {
             <Link
               key={record.id}
               href={{
-                pathname: "/spot/[id]",
+                pathname: "/[id]",
                 params: {
                   id: record.id,
                   imageURL: record.fields.Photos[0].url,
