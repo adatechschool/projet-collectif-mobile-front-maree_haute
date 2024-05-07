@@ -33,11 +33,14 @@ export default function Page() {
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.box}>
+        <Text>HELLO</Text>
+      </View>
       <View style={styles.main}>
-        
         {data.map((record) => {
           return (
             <Link
+              style={styles.link}
               key={record.id}
               href={{
                 pathname: "/[id]",
@@ -75,13 +78,18 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     // alignItems: "center",
-    padding: 24,
+    flexGrow: 1,
+    width: "100%",
+    // padding: 24,
   },
   main: {
     // flex: 1,
     // justifyContent: "center",
     maxWidth: 960,
     marginHorizontal: "auto",
+  },
+  link: {
+    backgroundColor: "purple",
   },
   title: {
     fontSize: 64,
@@ -90,5 +98,10 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 36,
     color: "#38434D",
+  },
+  box: {
+    width: "100%",
+    height: 200,
+    backgroundColor: "red",
   },
 });

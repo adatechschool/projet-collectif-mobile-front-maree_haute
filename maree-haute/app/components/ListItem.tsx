@@ -16,26 +16,34 @@ export default function ListItem({
   difficulty,
   startSeason,
   endSeason,
-} :Props) {
-  
+}: Props) {
   return (
-    <View>
+    <View style={styles.container}>
       <Image
         style={styles.image}
         source={{
           uri: imageURL,
         }}
       />
-      <Text>{destination}</Text>
-      <Text>{destinationCountry}</Text>
-      <Text>{difficulty}</Text>
-      <Text>{startSeason}</Text>
-      <Text>{endSeason}</Text>
+      <View style={styles.card}>
+        <Text>{destination}</Text>
+        <Text>{destinationCountry}</Text>
+        <Text>{difficulty}</Text>
+        <Text>{startSeason}</Text>
+        <Text>{endSeason}</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    backgroundColor: "#fff",
+  },
+  card: {
+    width: "100%",
+  },
   title: {
     fontSize: 64,
     fontWeight: "bold",
