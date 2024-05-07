@@ -1,5 +1,9 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Button } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+
+const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
+const Airtable = require("airtable");
+var base = new Airtable({ apiKey: TOKEN }).base("appfYZhtggrzhPbaz");
 
 export default function Spot() {
   const {
@@ -11,9 +15,29 @@ export default function Spot() {
     startSeason,
     endSeason,
     description,
+    liked
   } = useLocalSearchParams();
 
-  console.log("id", imageURL);
+  console.log("id", liked, imageURL);
+
+  const updateLike = () => {
+    base('Surf Destinations').update([
+      {
+        "id": id,
+        "fields": {
+          "Liked": true
+        }
+      }
+    ], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function(record) {
+        console.log(record.get('Magic Seaweed Link'));
+      });
+    });
+  };
 
   return (
     <View>
@@ -30,9 +54,16 @@ export default function Spot() {
       <Text>{startSeason}</Text>
       <Text>{endSeason}</Text>
       <Text>{description}</Text>
+      <Text>{liked}</Text>
+
+      <Button
+        onPress={() => updateLike()}
+        title="Like"
+      />
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   image: {
     width: "100%",

@@ -7,6 +7,7 @@ interface Props {
   difficulty: string;
   startSeason: string;
   endSeason: string;
+  liked: boolean;
 }
 
 export default function ListItem({
@@ -16,6 +17,7 @@ export default function ListItem({
   difficulty,
   startSeason,
   endSeason,
+  liked
 } :Props) {
   
   return (

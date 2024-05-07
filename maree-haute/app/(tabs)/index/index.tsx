@@ -51,6 +51,7 @@ export default function Page() {
                   startSeason: record.fields["Peak Surf Season Begins"],
                   endSeason: record.fields["Peak Surf Season Ends"],
                   description: record.fields.Description,
+                  liked: record.fields.Liked,
                 },
               }}
             >
@@ -62,6 +63,7 @@ export default function Page() {
                 difficulty={record.fields["Difficulty Level"]}
                 startSeason={record.fields["Peak Surf Season Begins"]}
                 endSeason={record.fields["Peak Surf Season Ends"]}
+                liked={record.fields.Liked}
               />
             </Link>
           );
