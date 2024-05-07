@@ -33,6 +33,7 @@ export default function TabLayout() {
             <FontAwesome size={28} name="cog" color={color} />
           ),
           headerShown: false,
+          headerTransparent: true,
         }}
       />
     </Tabs>
