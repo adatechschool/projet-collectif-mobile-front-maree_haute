@@ -58,21 +58,20 @@ export default function Modal() {
             Destination: destination,
             "Destination State/Country": location,
             "Difficulty Level": difficultyLevel,
-            "Surf Break": ["Reef Break"],
+            "Surf Break": [surfBreak],
             Photos: [
               {
                 url: "",
               },
             ],
-            "Peak Surf Season Begins": "",
-            "Peak Surf Season Ends": "",
+            "Peak Surf Season Begins": new Date().toISOString().split('T')[0],
+            "Peak Surf Season Ends": new Date().toISOString().split('T')[0],
             "Magic Seaweed Link":
-              "https://magicseaweed.com/Pipeline-Backdoor-Surf-Report/616/",
-            Influencers: ["recl6pl7zOShNsf7A", "recJuj7XZvbXN5ZgV"],
+              "",
+            Influencers: [],
             Geocode:
-              "eyJpIjoiUGlwZWxpbmUsIE9haHUsIEhhd2FpaSIsIm8iOnsic3RhdHVzIjoiT0siLCJmb3JtYXR0ZWRBZGRyZXNzIjoiRWh1a2FpIEJlYWNoIFBhcmssIEhhbGVpd2EsIEhJIDk2NzEyLCBVbml0ZW...",
-            Description:
-              "Est cillum laboris labore Lorem aliquip culpa. Aliquip qui quis aute id ipsum veniam velit laborum. Irure aute do esse in in laborum elit ex. Amet mol...",
+              "",
+            Description: description,
           },
         },
       ],
