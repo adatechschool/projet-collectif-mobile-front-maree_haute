@@ -6,12 +6,15 @@ import {
   StyleSheet,
   SafeAreaView,
   InputModeOptions,
+  Image
 } from "react-native";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
+import * as ImagePicker from 'expo-image-picker'
+
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
 const Airtable = require("airtable");
@@ -24,6 +27,24 @@ export default function Modal() {
   const [difficultyLevel, setDifficultyLevel] = useState(0);
   const [surfBreak, setSurfBreak] = useState("");
   const [description, setDescription] = useState("");
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const difficultyLevelOptions = [
     "Novice",
@@ -49,6 +70,7 @@ export default function Modal() {
       difficultyLevel,
       surfBreak,
       description,
+      image
     });
     const difficultyValue = difficultyLevelOptions[difficultyLevel];
     base("Surf Destinations").create(
@@ -61,7 +83,7 @@ export default function Modal() {
             "Surf Break": [surfBreak],
             Photos: [
               {
-                url: "",
+                url:"",
               },
             ],
             "Peak Surf Season Begins": new Date().toISOString().split('T')[0],
@@ -101,6 +123,12 @@ export default function Modal() {
             value={location}
             onChangeText={setLocation}
           />
+
+          <View>
+          <Button title="Pick an image from camera roll" onPress={pickImage} />
+          {image && <Image source={{ uri: image }} style={styles.image} />}
+          </View>
+
           <SelectDropdown
             data={difficultyLevelOptions}
             onSelect={(selectedItem, index) => {
@@ -223,5 +251,10 @@ const styles = StyleSheet.create({
   dropdownItemIconStyle: {
     fontSize: 28,
     marginRight: 8,
+  },
+
+  image: {
+    width: 200,
+    height: 200,
   },
 });
