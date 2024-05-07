@@ -39,7 +39,7 @@ export default function ListItem({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
   card: {
     width: "100%",

@@ -85,10 +85,13 @@ const styles = StyleSheet.create({
   main: {
     // flex: 1,
     // justifyContent: "center",
-    maxWidth: 960,
+    // maxWidth: 960,
     marginHorizontal: "auto",
+    width: "100%",
+    backgroundColor: "pink",
   },
   link: {
+    width: "100%",
     backgroundColor: "purple",
   },
   title: {
