@@ -181,7 +181,7 @@ export default function Modal() {
             list={seasonStartOptions}
             title="Season Start"
             isIndex={false}
-            setSelectedItem={setSeasonStart}
+            setSelectedItem={setSeasonStart}     
           />
           <DropDown
             list={seasonEndOptions}
