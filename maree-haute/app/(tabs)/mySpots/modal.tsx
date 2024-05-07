@@ -6,14 +6,15 @@ import {
   StyleSheet,
   SafeAreaView,
   InputModeOptions,
-  Image
+  Image,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
-import * as ImagePicker from 'expo-image-picker'
+import * as ImagePicker from "expo-image-picker";
+import { DropDown } from "../../components/DropDown";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -75,7 +76,7 @@ export default function Modal() {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
 
   const seasonEndOptions = [
@@ -90,12 +91,11 @@ export default function Modal() {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
 
   // Handle form submission
   const handleSubmit = () => {
- 
     console.log({
       destination,
       location,
@@ -104,10 +104,9 @@ export default function Modal() {
       description,
       image,
       seasonStart,
-      seasonEnd
+      seasonEnd,
     });
 
-    const difficultyValue = difficultyLevelOptions[difficultyLevel];
     base("Surf Destinations").create(
       [
         {
@@ -118,16 +117,14 @@ export default function Modal() {
             "Surf Break": [surfBreak],
             Photos: [
               {
-                url:"",
+                url: "",
               },
             ],
             "Peak Surf Season Begins": `01/${seasonStart}/2024`,
             "Peak Surf Season Ends": `01/${seasonEnd}/2024`,
-            "Magic Seaweed Link":
-              "",
+            "Magic Seaweed Link": "",
             Influencers: [],
-            Geocode:
-              "",
+            Geocode: "",
             Description: description,
           },
         },
@@ -148,7 +145,6 @@ export default function Modal() {
     <View style={styles.container}>
       <SafeAreaView>
         <View>
-
           <TextInput
             placeholder="Destination"
             value={destination}
@@ -162,128 +158,36 @@ export default function Modal() {
           />
 
           <View>
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
-          {image && <Image source={{ uri: image }} style={styles.image} />}
+            <Button
+              title="Pick an image from camera roll"
+              onPress={pickImage}
+            />
+            {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
 
-          <SelectDropdown
-            data={seasonStartOptions}
-            onSelect={(selectedItem, index) => {
-              setSeasonStart(selectedItem);
-            }}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem || "Start Season"}
-                  </Text>
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                  }}
-                >
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
-            showsVerticalScrollIndicator={false}
-            dropdownStyle={styles.dropdownMenuStyle}
+          <DropDown
+            list={difficultyLevelOptions}
+            title="Difficulty"
+            isIndex={true}
+            setSelectedItem={setDifficultyLevel}
           />
-
-          <SelectDropdown
-            data={seasonEndOptions}
-            onSelect={(selectedItem, index) => {
-              setSeasonEnd(selectedItem);
-            }}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem || "End Season"}
-                  </Text>
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                  }}
-                >
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
-            showsVerticalScrollIndicator={false}
-            dropdownStyle={styles.dropdownMenuStyle}
+          <DropDown
+            list={surfBreakOptions}
+            title="Surf Break"
+            isIndex={false}
+            setSelectedItem={setSurfBreak}
           />
-          
-          <SelectDropdown
-            data={difficultyLevelOptions}
-            onSelect={(selectedItem, index) => {
-              setDifficultyLevel(index + 1);
-            }}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem || "Difficulty"}
-                  </Text>
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                  }}
-                >
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
-            showsVerticalScrollIndicator={false}
-            dropdownStyle={styles.dropdownMenuStyle}
+          <DropDown
+            list={seasonStartOptions}
+            title="Season Start"
+            isIndex={false}
+            setSelectedItem={setSeasonStart}     
           />
-
-          <SelectDropdown
-            data={surfBreakOptions}
-            onSelect={(selectedItem, index) => {
-              setSurfBreak(selectedItem);
-            }}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem || "Surf Break"}
-                  </Text>
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                  }}
-                >
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
-            showsVerticalScrollIndicator={false}
-            dropdownStyle={styles.dropdownMenuStyle}
+          <DropDown
+            list={seasonEndOptions}
+            title="Season End"
+            isIndex={false}
+            setSelectedItem={setSeasonEnd}
           />
 
           <TextInput
@@ -294,7 +198,6 @@ export default function Modal() {
 
           <Button title="Submit" onPress={handleSubmit} />
         </View>
-        
       </SafeAreaView>
       {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
       <StatusBar style="light" />
