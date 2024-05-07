@@ -166,18 +166,6 @@ export default function Modal() {
           {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
 
-          <TextInput
-            placeholder="Season start"
-            value={seasonStart}
-            onChangeText={setSeasonStart}
-          />
-
-          <TextInput
-            placeholder="Season end"
-            value={seasonEnd}
-            onChangeText={setSeasonEnd}
-          />
-
           <SelectDropdown
             data={seasonStartOptions}
             onSelect={(selectedItem, index) => {
