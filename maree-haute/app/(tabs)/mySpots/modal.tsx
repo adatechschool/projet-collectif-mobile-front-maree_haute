@@ -27,6 +27,8 @@ export default function Modal() {
   const [difficultyLevel, setDifficultyLevel] = useState(0);
   const [surfBreak, setSurfBreak] = useState("");
   const [description, setDescription] = useState("");
+  const [seasonStart, setSeasonStart] = useState("");
+  const [seasonEnd, setSeasonEnd] = useState("");
 
   const [image, setImage] = useState(null);
 
@@ -61,17 +63,50 @@ export default function Modal() {
     "Beach Break",
   ];
 
+  const seasonStartOptions = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  const seasonEndOptions = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
   // Handle form submission
   const handleSubmit = () => {
-    // Process form data here (e.g., send it to a server)
+ 
     console.log({
       destination,
       location,
       difficultyLevel,
       surfBreak,
       description,
-      image
+      image,
+      seasonStart,
+      seasonEnd
     });
+
     const difficultyValue = difficultyLevelOptions[difficultyLevel];
     base("Surf Destinations").create(
       [
@@ -86,8 +121,8 @@ export default function Modal() {
                 url:"",
               },
             ],
-            "Peak Surf Season Begins": new Date().toISOString().split('T')[0],
-            "Peak Surf Season Ends": new Date().toISOString().split('T')[0],
+            "Peak Surf Season Begins": `01/${seasonStart}/2024`,
+            "Peak Surf Season Ends": `01/${seasonEnd}/2024`,
             "Magic Seaweed Link":
               "",
             Influencers: [],
@@ -113,11 +148,13 @@ export default function Modal() {
     <View style={styles.container}>
       <SafeAreaView>
         <View>
+
           <TextInput
             placeholder="Destination"
             value={destination}
             onChangeText={setDestination}
           />
+
           <TextInput
             placeholder="Location"
             value={location}
@@ -129,6 +166,78 @@ export default function Modal() {
           {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
 
+          <TextInput
+            placeholder="Season start"
+            value={seasonStart}
+            onChangeText={setSeasonStart}
+          />
+
+          <TextInput
+            placeholder="Season end"
+            value={seasonEnd}
+            onChangeText={setSeasonEnd}
+          />
+
+          <SelectDropdown
+            data={seasonStartOptions}
+            onSelect={(selectedItem, index) => {
+              setSeasonStart(selectedItem);
+            }}
+            renderButton={(selectedItem, isOpened) => {
+              return (
+                <View style={styles.dropdownButtonStyle}>
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {selectedItem || "Start Season"}
+                  </Text>
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            showsVerticalScrollIndicator={false}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+
+          <SelectDropdown
+            data={seasonEndOptions}
+            onSelect={(selectedItem, index) => {
+              setSeasonEnd(selectedItem);
+            }}
+            renderButton={(selectedItem, isOpened) => {
+              return (
+                <View style={styles.dropdownButtonStyle}>
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {selectedItem || "End Season"}
+                  </Text>
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            showsVerticalScrollIndicator={false}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+          
           <SelectDropdown
             data={difficultyLevelOptions}
             onSelect={(selectedItem, index) => {
@@ -158,6 +267,7 @@ export default function Modal() {
             showsVerticalScrollIndicator={false}
             dropdownStyle={styles.dropdownMenuStyle}
           />
+
           <SelectDropdown
             data={surfBreakOptions}
             onSelect={(selectedItem, index) => {
@@ -187,13 +297,16 @@ export default function Modal() {
             showsVerticalScrollIndicator={false}
             dropdownStyle={styles.dropdownMenuStyle}
           />
+
           <TextInput
             placeholder="Description"
             value={description}
             onChangeText={setDescription}
           />
+
           <Button title="Submit" onPress={handleSubmit} />
         </View>
+        
       </SafeAreaView>
       {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
       <StatusBar style="light" />
