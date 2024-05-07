@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-
 export default function App() {
   const [coordinate, setCoordinate] = useState(null);
 
@@ -9,29 +8,30 @@ export default function App() {
     const { coordinate } = event.nativeEvent;
     setCoordinate(coordinate);
   };
-
   return (
     <View style={styles.container}>
-      {/* <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 47.214052,
-          longitude: -1.543507,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onPress={handleMapPress}
-      >
-        {coordinate && (
-          <Marker coordinate={coordinate} title="Selected Location" />
-        )}
-      </MapView>
+      {Platform.OS !== "web" && (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 47.214052,
+            longitude: -1.543507,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          onPress={handleMapPress}
+        >
+          {coordinate && (
+            <Marker coordinate={coordinate} title="Selected Location" />
+          )}
+        </MapView>
+      )}
       {coordinate && (
         <View style={styles.marker}>
           <Text>Latitude: {coordinate.latitude}</Text>
           <Text>Longitude: {coordinate.longitude}</Text>
         </View>
-      )} */}
+      )}
     </View>
   );
 }
