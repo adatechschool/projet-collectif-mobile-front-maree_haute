@@ -31,6 +31,22 @@ export default function Page() {
     fetchData();
   }, []);
 
+  const navigateToDetail = (record) => {
+    // Navigate to detailed view with specified params
+    router.push({
+      pathname: "/[id]",
+      params: {
+        id: record.id,
+        imageURL: record.fields.Photos[0].url,
+        destination: record.fields.Destination,
+        destinationCountry: record.fields["Destination State/Country"],
+        difficulty: record.fields["Difficulty Level"],
+        startSeason: record.fields["Peak Surf Season Begins"],
+        endSeason: record.fields["Peak Surf Season Ends"],
+        description: record.fields.Description,
+      },
+    });
+  };
   return (
     <ScrollView style={styles.container}>
       {/* <View style={styles.box}>
@@ -66,6 +82,7 @@ export default function Page() {
               startSeason={record.fields["Peak Surf Season Begins"]}
               endSeason={record.fields["Peak Surf Season Ends"]}
               description={record.fields.Description}
+              onPress={() => navigateToDetail(record)}
             />
             // </Link>
           );

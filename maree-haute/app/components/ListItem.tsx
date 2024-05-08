@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 
 interface Props {
   imageURL: string;
@@ -8,6 +15,7 @@ interface Props {
   startSeason: string;
   endSeason: string;
   description: string;
+  onPress?: () => void;
 }
 
 export default function ListItem({
@@ -18,6 +26,7 @@ export default function ListItem({
   startSeason,
   endSeason,
   description,
+  onPress,
 }: Props) {
   const formatMonth = (dateString: string) => {
     const date = new Date(dateString);
@@ -25,7 +34,11 @@ export default function ListItem({
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
+      style={styles.container}
+    >
       <View style={styles.backgroundImageContainer}>
         <Image
           style={styles.backgroundImage}
@@ -50,7 +63,7 @@ export default function ListItem({
           {/* <Text>{difficulty}</Text> */}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
