@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { DifficultyLabel, SurfBreakLabel } from "./Labels";
+import { DifficultyLabel, SurfBreakLabel, SeasonLabel } from "./Labels";
 
 interface Props {
   imageURL: string;
@@ -52,6 +52,9 @@ export default function ListItem({
         />
       </View>
       <View style={styles.cardLabels}>
+        <SeasonLabel
+          season={`${formatMonth(startSeason)} - ${formatMonth(endSeason)}`}
+        />
         <SurfBreakLabel surfBreak={surfBreak} />
         <DifficultyLabel difficulty={difficulty} />
       </View>
@@ -64,12 +67,12 @@ export default function ListItem({
             </Text>
             <Text style={styles.cardHeadlineText}></Text>
           </View>
-          <View style={styles.cardSubText}>
+          {/* <View style={styles.cardSubText}>
             <Text style={styles.cardHeadlineText}>
               {formatMonth(startSeason)} - {formatMonth(endSeason)}
             </Text>
             <Text style={styles.cardHeadlineText}>{surfBreak}</Text>
-          </View>
+          </View> */}
           <Text
             numberOfLines={2}
             ellipsizeMode="tail"
