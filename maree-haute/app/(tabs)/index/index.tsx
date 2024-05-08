@@ -33,9 +33,9 @@ export default function Page() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.box}>
+      {/* <View style={styles.box}>
         <Text>HELLO</Text>
-      </View>
+      </View> */}
       <View style={styles.main}>
         {data.map((record) => {
           return (
@@ -65,6 +65,7 @@ export default function Page() {
               difficulty={record.fields["Difficulty Level"]}
               startSeason={record.fields["Peak Surf Season Begins"]}
               endSeason={record.fields["Peak Surf Season Ends"]}
+              description={record.fields.Description}
             />
             // </Link>
           );
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     // alignItems: "center",
     flexGrow: 1,
-    width: "100%",
+    // width: "100%",
     // padding: 24,
   },
   main: {
@@ -88,7 +89,9 @@ const styles = StyleSheet.create({
     // maxWidth: 960,
     marginHorizontal: "auto",
     width: "100%",
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
+    padding: 10,
+    gap: 10,
   },
   link: {
     width: "100%",
