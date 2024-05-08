@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
+import { DifficultyLabel } from "./Labels";
 
 interface Props {
   imageURL: string;
@@ -14,6 +15,7 @@ interface Props {
   difficulty: string;
   startSeason: string;
   endSeason: string;
+  surfBreak: string;
   description: string;
   onPress?: () => void;
 }
@@ -25,6 +27,7 @@ export default function ListItem({
   difficulty,
   startSeason,
   endSeason,
+  surfBreak,
   description,
   onPress,
 }: Props) {
@@ -48,19 +51,31 @@ export default function ListItem({
           resizeMode="cover" // This ensures that the image covers the entire area of the container
         />
       </View>
+      <View style={styles.cardLabels}>
+        <DifficultyLabel difficulty={difficulty} />
+      </View>
       <View style={styles.card}>
         <View style={styles.cardText}>
           <Text style={styles.cardTitleText}>{destination}</Text>
           <View style={styles.cardSubText}>
-            <Text style={styles.cardHeadlineText}>{destinationCountry}</Text>
+            <Text style={[styles.cardHeadlineText, { fontWeight: "bold" }]}>
+              {destinationCountry}
+            </Text>
+            <Text style={styles.cardHeadlineText}></Text>
+          </View>
+          <View style={styles.cardSubText}>
             <Text style={styles.cardHeadlineText}>
               {formatMonth(startSeason)} - {formatMonth(endSeason)}
             </Text>
+            <Text style={styles.cardHeadlineText}>{surfBreak}</Text>
           </View>
-          <Text style={styles.CardDescriptionText}>
-            {description.split(" ").slice(0, 5).join(" ")}...
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[styles.CardDescriptionText, { width: "100%" }]}
+          >
+            {description}
           </Text>
-          {/* <Text>{difficulty}</Text> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -90,22 +105,33 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   card: {
-    // width: "100%",
+    width: "100%",
     backgroundColor: "#FCFCFC",
     padding: 10,
     borderRadius: 15,
     overflow: "hidden",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   cardText: {
     display: "flex",
     paddingLeft: 5,
     paddingRight: 5,
     gap: 5,
+    // backgroundColor: "pink",
+    width: "100%",
   },
   cardSubText: {
     display: "flex",
     flexDirection: "row",
-    gap: 10,
+    gap: 15,
+  },
+  cardLabels: {
+    position: "absolute",
+    top: 10,
+    right: 10,
   },
   cardTitleText: {
     fontSize: 28,

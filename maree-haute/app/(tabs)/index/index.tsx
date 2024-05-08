@@ -3,6 +3,10 @@ import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import ListItem from "../../components/ListItem";
 import { Link } from "expo-router";
+import {
+  DifficultyLabel,
+  DifficultyLabelBlueprint,
+} from "../../components/Labels";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -43,36 +47,16 @@ export default function Page() {
         difficulty: record.fields["Difficulty Level"],
         startSeason: record.fields["Peak Surf Season Begins"],
         endSeason: record.fields["Peak Surf Season Ends"],
+        surfBreak: record.fields["Surf Break"],
         description: record.fields.Description,
       },
     });
   };
   return (
     <ScrollView style={styles.container}>
-      {/* <View style={styles.box}>
-        <Text>HELLO</Text>
-      </View> */}
       <View style={styles.main}>
         {data.map((record) => {
           return (
-            // <Link
-            //   style={styles.link}
-            //   key={record.id}
-            //   href={{
-            //     pathname: "/[id]",
-            //     params: {
-            //       id: record.id,
-            //       imageURL: record.fields.Photos[0].url,
-            //       destination: record.fields.Destination,
-            //       destinationCountry:
-            //         record.fields["Destination State/Country"],
-            //       difficulty: record.fields["Difficulty Level"],
-            //       startSeason: record.fields["Peak Surf Season Begins"],
-            //       endSeason: record.fields["Peak Surf Season Ends"],
-            //       description: record.fields.Description,
-            //     },
-            //   }}
-            // >
             <ListItem
               key={record.id}
               imageURL={record.fields.Photos[0].url}
@@ -81,10 +65,10 @@ export default function Page() {
               difficulty={record.fields["Difficulty Level"]}
               startSeason={record.fields["Peak Surf Season Begins"]}
               endSeason={record.fields["Peak Surf Season Ends"]}
+              surfBreak={record.fields["Surf Break"]}
               description={record.fields.Description}
               onPress={() => navigateToDetail(record)}
             />
-            // </Link>
           );
         })}
       </View>
