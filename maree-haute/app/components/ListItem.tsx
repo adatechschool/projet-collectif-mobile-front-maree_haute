@@ -19,6 +19,11 @@ export default function ListItem({
   endSeason,
   description,
 }: Props) {
+  const formatMonth = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("default", { month: "short" });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}>
@@ -35,10 +40,13 @@ export default function ListItem({
           <Text style={styles.cardTitleText}>{destination}</Text>
           <View style={styles.cardSubText}>
             <Text style={styles.cardHeadlineText}>{destinationCountry}</Text>
-            <Text style={styles.cardHeadlineText}>{startSeason}</Text>
-            <Text style={styles.cardHeadlineText}>{endSeason}</Text>
+            <Text style={styles.cardHeadlineText}>
+              {formatMonth(startSeason)} - {formatMonth(endSeason)}
+            </Text>
           </View>
-          <Text>{description}</Text>
+          <Text style={styles.CardDescriptionText}>
+            {description.split(" ").slice(0, 5).join(" ")}...
+          </Text>
           {/* <Text>{difficulty}</Text> */}
         </View>
       </View>
@@ -49,7 +57,7 @@ export default function ListItem({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 250,
+    height: 300,
     backgroundColor: "white",
     padding: 5,
     justifyContent: "flex-end",
@@ -70,7 +78,7 @@ const styles = StyleSheet.create({
   },
   card: {
     // width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#FCFCFC",
     padding: 10,
     borderRadius: 15,
     overflow: "hidden",
@@ -92,5 +100,8 @@ const styles = StyleSheet.create({
   },
   cardHeadlineText: {
     fontSize: 18,
+  },
+  CardDescriptionText: {
+    fontSize: 17,
   },
 });
