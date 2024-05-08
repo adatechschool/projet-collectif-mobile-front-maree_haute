@@ -62,13 +62,6 @@ export function DifficultyLabel({ difficulty }) {
         borderRadius: 10,
         overflow: "hidden",
         backgroundColor: difficultyInfo.containerColor,
-        // shadowColor: "#815E46",
-        // shadowOffset: {
-        //   width: 0,
-        //   height: 2,
-        // },
-        // shadowOpacity: 1,
-        // shadowRadius: 0,
       }}
     >
       <View

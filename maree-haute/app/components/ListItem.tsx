@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 300,
     backgroundColor: "white",
-    padding: 5,
+    padding: 10,
     justifyContent: "flex-end",
     borderRadius: 20,
     overflow: "hidden",
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
+    opacity: 0.7,
   },
   cardText: {
     display: "flex",
