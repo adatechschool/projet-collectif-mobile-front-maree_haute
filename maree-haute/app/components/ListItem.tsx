@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { DifficultyLabel } from "./Labels";
+import { DifficultyLabel, SurfBreakLabel } from "./Labels";
 
 interface Props {
   imageURL: string;
@@ -52,6 +52,7 @@ export default function ListItem({
         />
       </View>
       <View style={styles.cardLabels}>
+        <SurfBreakLabel surfBreak={surfBreak} />
         <DifficultyLabel difficulty={difficulty} />
       </View>
       <View style={styles.card}>
@@ -70,7 +71,7 @@ export default function ListItem({
             <Text style={styles.cardHeadlineText}>{surfBreak}</Text>
           </View>
           <Text
-            numberOfLines={1}
+            numberOfLines={2}
             ellipsizeMode="tail"
             style={[styles.CardDescriptionText, { width: "100%" }]}
           >
@@ -132,6 +133,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
+    display: "flex",
+    flexDirection: "row",
+    gap: 5,
   },
   cardTitleText: {
     fontSize: 28,

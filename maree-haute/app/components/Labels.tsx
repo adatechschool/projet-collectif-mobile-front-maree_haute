@@ -51,7 +51,7 @@ export function DifficultyLabel({ difficulty }) {
     <View
       style={{
         display: "flex",
-        width: 75,
+        // width: 75,
         height: 30,
         paddingTop: 4,
         paddingRight: 4,
@@ -78,6 +78,8 @@ export function DifficultyLabel({ difficulty }) {
           alignItems: "center",
           flex: 1,
           alignSelf: "stretch",
+          paddingLeft: 5,
+          paddingRight: 5,
           borderRadius: 7,
           backgroundColor: difficultyInfo.innerContainerColor,
         }}
@@ -169,3 +171,61 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.10)",
   },
 });
+
+export function SurfBreakLabel({ surfBreak }: { surfBreak: string }) {
+  return (
+    <View
+      style={{
+        display: "flex",
+        // width: 75,
+        height: 30,
+        paddingTop: 4,
+        paddingRight: 4,
+        paddingLeft: 4,
+        paddingBottom: 4,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
+        overflow: "hidden",
+        backgroundColor: "#3DB9CE",
+      }}
+    >
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          alignSelf: "stretch",
+          paddingLeft: 5,
+          paddingRight: 5,
+          borderRadius: 7,
+          backgroundColor: "#117D98",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 13,
+            color: "#9DDDE7",
+            textShadowColor: "#5F868D",
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 0,
+          }}
+        >
+          {surfBreak}
+        </Text>
+      </View>
+      <View
+        style={{
+          width: 9,
+          height: 83,
+          transform: [{ rotate: "-60deg" }],
+          position: "absolute",
+          right: 10,
+          top: -28,
+          backgroundColor: "rgba(255, 255, 255, 0.15)",
+        }}
+      />
+    </View>
+  );
+}
