@@ -39,34 +39,34 @@ export default function Page() {
       <View style={styles.main}>
         {data.map((record) => {
           return (
-            <Link
-              style={styles.link}
+            // <Link
+            //   style={styles.link}
+            //   key={record.id}
+            //   href={{
+            //     pathname: "/[id]",
+            //     params: {
+            //       id: record.id,
+            //       imageURL: record.fields.Photos[0].url,
+            //       destination: record.fields.Destination,
+            //       destinationCountry:
+            //         record.fields["Destination State/Country"],
+            //       difficulty: record.fields["Difficulty Level"],
+            //       startSeason: record.fields["Peak Surf Season Begins"],
+            //       endSeason: record.fields["Peak Surf Season Ends"],
+            //       description: record.fields.Description,
+            //     },
+            //   }}
+            // >
+            <ListItem
               key={record.id}
-              href={{
-                pathname: "/[id]",
-                params: {
-                  id: record.id,
-                  imageURL: record.fields.Photos[0].url,
-                  destination: record.fields.Destination,
-                  destinationCountry:
-                    record.fields["Destination State/Country"],
-                  difficulty: record.fields["Difficulty Level"],
-                  startSeason: record.fields["Peak Surf Season Begins"],
-                  endSeason: record.fields["Peak Surf Season Ends"],
-                  description: record.fields.Description,
-                },
-              }}
-            >
-              <ListItem
-                key={record.id}
-                imageURL={record.fields.Photos[0].url}
-                destination={record.fields.Destination}
-                destinationCountry={record.fields["Destination State/Country"]}
-                difficulty={record.fields["Difficulty Level"]}
-                startSeason={record.fields["Peak Surf Season Begins"]}
-                endSeason={record.fields["Peak Surf Season Ends"]}
-              />
-            </Link>
+              imageURL={record.fields.Photos[0].url}
+              destination={record.fields.Destination}
+              destinationCountry={record.fields["Destination State/Country"]}
+              difficulty={record.fields["Difficulty Level"]}
+              startSeason={record.fields["Peak Surf Season Begins"]}
+              endSeason={record.fields["Peak Surf Season Ends"]}
+            />
+            // </Link>
           );
         })}
       </View>

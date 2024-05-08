@@ -40,9 +40,12 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     backgroundColor: "white",
+    padding: 5,
+    // flex: 1,
   },
   card: {
     width: "100%",
+    backgroundColor: "pink",
   },
   title: {
     fontSize: 64,
