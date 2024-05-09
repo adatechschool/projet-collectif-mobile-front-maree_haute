@@ -9,6 +9,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -18,6 +19,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import * as ImagePicker from "expo-image-picker";
 import { DropDown } from "../../components/DropDown";
 import { DifficultyLabel } from "../../components/Labels";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -36,21 +38,20 @@ export default function Modal() {
   const [seasonEnd, setSeasonEnd] = useState("");
 
   const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
+  const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       allowsMultipleSelection: true,
+      selectionLimit: 3,
       aspect: [4, 3],
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImages(result.assets.map((asset) => asset.uri));
     }
   };
 
@@ -175,7 +176,7 @@ export default function Modal() {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.difficultyContainer}
+            contentContainerStyle={styles.horizontalContainer}
           >
             {difficultyLevels.map((level) => (
               <TouchableOpacity
@@ -186,7 +187,6 @@ export default function Modal() {
                 ]}
                 onPress={() => handleDifficultySelect(level.value)}
               >
-                {/* Render the DifficultyLabel component */}
                 <DifficultyLabel difficulty={level.value} />
               </TouchableOpacity>
             ))}
@@ -233,15 +233,32 @@ export default function Modal() {
               />
             </View>
           </View>
-
-          <View>
-            <Button
-              title="Pick an image from camera roll"
-              onPress={pickImage}
-            />
-            {image && <Image source={{ uri: image }} style={styles.image} />}
-          </View>
-
+          <Text style={styles.inputLabel}>Add images</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.horizontalContainer}
+          >
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={pickImages}
+              style={styles.uploadImagesButton}
+            >
+              <MaterialIcons
+                name="add-photo-alternate"
+                size={40}
+                color="#C5C5C5"
+              />
+            </TouchableOpacity>
+            {images.length > 0 &&
+              images.map((image, index) => (
+                <Image
+                  key={index}
+                  source={{ uri: image }}
+                  style={styles.uploadedImage}
+                />
+              ))}
+          </ScrollView>
           <Button title="Submit" onPress={handleSubmit} />
         </ScrollView>
       </SafeAreaView>
@@ -281,21 +298,36 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
   },
-  difficultyContainer: {
+  horizontalContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
+    gap: 10,
   },
   difficultyOption: {
     // paddingHorizontal: 16,
     // paddingVertical: 8,
-    paddingRight: 10,
+    // paddingRight: 10,
   },
   difficultyText: {
     fontSize: 16,
   },
-  image: {
-    width: 200,
-    height: 200,
+  uploadImagesButton: {
+    height: 120,
+    width: 120,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    borderRadius: 10,
+    borderStyle: "dashed",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  uploadedImage: {
+    height: 120,
+    width: 120,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
   },
 });
