@@ -51,8 +51,7 @@ export function DifficultyLabel({ difficulty }) {
     <View
       style={{
         display: "flex",
-        // Replace width with maxWidth somehow
-        width: 75,
+        maxWidth: "100%",
         height: 30,
         paddingTop: 4,
         paddingRight: 4,
