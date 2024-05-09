@@ -171,7 +171,6 @@ export default function Modal() {
             multiline={true}
             numberOfLines={4}
           />
-
           <Text style={styles.inputLabel}>Difficulty</Text>
           <ScrollView
             horizontal
@@ -192,7 +191,13 @@ export default function Modal() {
               </TouchableOpacity>
             ))}
           </ScrollView>
-
+          <Text style={styles.inputLabel}>Surf Break</Text>
+          <DropDown
+            list={surfBreakOptions}
+            title="Surf Break"
+            isIndex={false}
+            setSelectedItem={setSurfBreak}
+          />
           <Text style={styles.inputLabel}>Address</Text>
           <TextInput
             style={styles.input}
@@ -200,6 +205,34 @@ export default function Modal() {
             value={location}
             onChangeText={setLocation}
           />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              gap: 10,
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={styles.inputLabel}>Season Start</Text>
+              <DropDown
+                list={seasonStartOptions}
+                title="Season Start"
+                isIndex={false}
+                setSelectedItem={setSeasonStart}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.inputLabel}>Season End</Text>
+              <DropDown
+                list={seasonEndOptions}
+                title="Season End"
+                isIndex={false}
+                setSelectedItem={setSeasonEnd}
+              />
+            </View>
+          </View>
 
           <View>
             <Button
@@ -208,25 +241,6 @@ export default function Modal() {
             />
             {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
-
-          <DropDown
-            list={surfBreakOptions}
-            title="Surf Break"
-            isIndex={false}
-            setSelectedItem={setSurfBreak}
-          />
-          <DropDown
-            list={seasonStartOptions}
-            title="Season Start"
-            isIndex={false}
-            setSelectedItem={setSeasonStart}
-          />
-          <DropDown
-            list={seasonEndOptions}
-            title="Season End"
-            isIndex={false}
-            setSelectedItem={setSeasonEnd}
-          />
 
           <Button title="Submit" onPress={handleSubmit} />
         </ScrollView>
