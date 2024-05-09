@@ -2,14 +2,14 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-export function FloatingButton({ text, onPress }) {
+export function FloatingButton({ icon, text, onPress }) {
   return (
     <TouchableOpacity
-      activeOpacity={0.2}
+      activeOpacity={0.6}
       onPress={onPress}
       style={styles.container}
     >
-      <MaterialIcons name="map" size={24} color="white" />
+      <MaterialIcons name={icon} size={24} color="white" />
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 5,
-    paddingVertical: 5,
+    paddingVertical: 10,
     paddingHorizontal: 15,
     justifyContent: "center",
     alignItems: "center",
@@ -28,8 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#5EB1EF",
     position: "absolute",
     bottom: 20,
-    right: "50%",
-    transform: [{ translateX: 50 }],
+    alignSelf: "center",
   },
   text: {
     color: "#fff",

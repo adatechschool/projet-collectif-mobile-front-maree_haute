@@ -73,7 +73,11 @@ export default function Page() {
           ))}
         </View>
       </ScrollView>
-      <FloatingButton text="Map" onPress={() => router.push("/mySpots")} />
+      <FloatingButton
+        icon={"map"}
+        text="Map"
+        onPress={() => router.push("/mySpots")}
+      />
     </View>
   );
 }
