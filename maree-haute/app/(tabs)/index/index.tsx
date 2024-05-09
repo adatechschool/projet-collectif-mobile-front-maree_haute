@@ -3,10 +3,6 @@ import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import ListItem from "../../components/ListItem";
 import { Link } from "expo-router";
-import {
-  DifficultyLabel,
-  DifficultyLabelBlueprint,
-} from "../../components/Labels";
 import { FloatingButton } from "../../components/FloatingButton";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;

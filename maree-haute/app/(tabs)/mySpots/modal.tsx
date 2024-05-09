@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   InputModeOptions,
   Image,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -15,6 +17,7 @@ import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import * as ImagePicker from "expo-image-picker";
 import { DropDown } from "../../components/DropDown";
+import { DifficultyLabel } from "../../components/Labels";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -25,7 +28,9 @@ export default function Modal() {
   // Define state variables to hold form data
   const [destination, setDestination] = useState("");
   const [location, setLocation] = useState("");
-  const [difficultyLevel, setDifficultyLevel] = useState(0);
+  // const [difficultyLevel, setDifficultyLevel] = useState(0);
+  const [difficultyLevel, setDifficultyLevel] = useState(null);
+
   const [surfBreak, setSurfBreak] = useState("");
   const [description, setDescription] = useState("");
   const [seasonStart, setSeasonStart] = useState("");
@@ -37,7 +42,8 @@ export default function Modal() {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
+      allowsMultipleSelection: true,
       aspect: [4, 3],
       quality: 1,
     });
@@ -56,6 +62,19 @@ export default function Modal() {
     "Advanced",
     "Expert",
   ];
+
+  const difficultyLevels = [
+    { label: "Novice", value: 1 },
+    { label: "Beginner", value: 2 },
+    { label: "Proficient", value: 3 },
+    { label: "Advanced", value: 4 },
+    { label: "Expert", value: 5 },
+  ];
+
+  const handleDifficultySelect = (value) => {
+    setDifficultyLevel(value);
+    console.log("Selected difficulty:", value);
+  };
 
   const surfBreakOptions = [
     "Reef Break",
@@ -143,16 +162,50 @@ export default function Modal() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        <View>
+      <SafeAreaView style={{ width: "100%" }}>
+        <ScrollView style={{ padding: 25 }}>
+          <Text style={styles.inputLabel}>Destination name</Text>
           <TextInput
+            style={styles.input}
             placeholder="Destination"
             value={destination}
             onChangeText={setDestination}
           />
-
+          <Text style={styles.inputLabel}>Description</Text>
           <TextInput
-            placeholder="Location"
+            style={styles.descriptionInput}
+            placeholder="Description"
+            value={description}
+            onChangeText={setDescription}
+            multiline={true}
+            numberOfLines={4}
+          />
+
+          <Text style={styles.inputLabel}>Difficulty</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.difficultyContainer}
+          >
+            {difficultyLevels.map((level) => (
+              <TouchableOpacity
+                key={level.label}
+                style={[
+                  styles.difficultyOption,
+                  { opacity: difficultyLevel === level.value ? 1 : 0.4 },
+                ]}
+                onPress={() => handleDifficultySelect(level.value)}
+              >
+                {/* Render the DifficultyLabel component */}
+                <DifficultyLabel difficulty={level.value} />
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          <Text style={styles.inputLabel}>Address</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Search address"
             value={location}
             onChangeText={setLocation}
           />
@@ -165,12 +218,12 @@ export default function Modal() {
             {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
 
-          <DropDown
+          {/* <DropDown
             list={difficultyLevelOptions}
             title="Difficulty"
             isIndex={true}
             setSelectedItem={setDifficultyLevel}
-          />
+          /> */}
           <DropDown
             list={surfBreakOptions}
             title="Surf Break"
@@ -181,7 +234,7 @@ export default function Modal() {
             list={seasonStartOptions}
             title="Season Start"
             isIndex={false}
-            setSelectedItem={setSeasonStart}     
+            setSelectedItem={setSeasonStart}
           />
           <DropDown
             list={seasonEndOptions}
@@ -190,14 +243,8 @@ export default function Modal() {
             setSelectedItem={setSeasonEnd}
           />
 
-          <TextInput
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
-          />
-
           <Button title="Submit" onPress={handleSubmit} />
-        </View>
+        </ScrollView>
       </SafeAreaView>
       {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
       <StatusBar style="light" />
@@ -209,8 +256,45 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
+  inputLabel: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    width: "100%",
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  descriptionInput: {
+    height: 120,
+    width: "100%",
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+
+  difficultyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  difficultyOption: {
+    // paddingHorizontal: 16,
+    // paddingVertical: 8,
+    paddingRight: 10,
+  },
+  difficultyText: {
+    fontSize: 16,
+  },
+
   dropdownButtonStyle: {
     width: 200,
     height: 50,
