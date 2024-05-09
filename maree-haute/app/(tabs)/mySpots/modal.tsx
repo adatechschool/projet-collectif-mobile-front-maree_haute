@@ -28,7 +28,6 @@ export default function Modal() {
   // Define state variables to hold form data
   const [destination, setDestination] = useState("");
   const [location, setLocation] = useState("");
-  // const [difficultyLevel, setDifficultyLevel] = useState(0);
   const [difficultyLevel, setDifficultyLevel] = useState(null);
 
   const [surfBreak, setSurfBreak] = useState("");
@@ -55,14 +54,6 @@ export default function Modal() {
     }
   };
 
-  const difficultyLevelOptions = [
-    "Novice",
-    "Beginner",
-    "Proficient",
-    "Advanced",
-    "Expert",
-  ];
-
   const difficultyLevels = [
     { label: "Novice", value: 1 },
     { label: "Beginner", value: 2 },
@@ -73,7 +64,7 @@ export default function Modal() {
 
   const handleDifficultySelect = (value) => {
     setDifficultyLevel(value);
-    console.log("Selected difficulty:", value);
+    // console.log("Selected difficulty:", value);
   };
 
   const surfBreakOptions = [
@@ -218,12 +209,6 @@ export default function Modal() {
             {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
 
-          {/* <DropDown
-            list={difficultyLevelOptions}
-            title="Difficulty"
-            isIndex={true}
-            setSelectedItem={setDifficultyLevel}
-          /> */}
           <DropDown
             list={surfBreakOptions}
             title="Surf Break"
@@ -260,6 +245,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 16,
     marginBottom: 10,
+    // paddingHorizontal: 25,
   },
   input: {
     height: 40,
@@ -285,6 +271,7 @@ const styles = StyleSheet.create({
   difficultyContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 20,
   },
   difficultyOption: {
     // paddingHorizontal: 16,
