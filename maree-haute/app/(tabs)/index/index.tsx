@@ -7,6 +7,7 @@ import {
   DifficultyLabel,
   DifficultyLabelBlueprint,
 } from "../../components/Labels";
+import { FloatingButton } from "../../components/FloatingButton";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -53,10 +54,10 @@ export default function Page() {
     });
   };
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.main}>
-        {data.map((record) => {
-          return (
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.main}>
+          {data.map((record) => (
             <ListItem
               key={record.id}
               imageURL={record.fields.Photos[0].url}
@@ -69,20 +70,20 @@ export default function Page() {
               description={record.fields.Description}
               onPress={() => navigateToDetail(record)}
             />
-          );
-        })}
-      </View>
-    </ScrollView>
+          ))}
+        </View>
+      </ScrollView>
+      <FloatingButton text="Map" onPress={() => router.push("/mySpots")} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // alignItems: "center",
     flexGrow: 1,
-    // width: "100%",
-    // padding: 24,
+  },
+  scrollView: {
+    flex: 1,
   },
   main: {
     // flex: 1,
