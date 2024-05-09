@@ -259,7 +259,9 @@ export default function Modal() {
                 />
               ))}
           </ScrollView>
-          <Button title="Submit" onPress={handleSubmit} />
+          <View style={{ marginBottom: 20 }}>
+            <Button title="Submit" onPress={handleSubmit} />
+          </View>
         </ScrollView>
       </SafeAreaView>
       {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
