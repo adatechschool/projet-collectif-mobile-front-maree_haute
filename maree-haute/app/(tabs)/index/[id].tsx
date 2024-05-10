@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 
 export default function Spot() {
   const {
@@ -14,7 +15,18 @@ export default function Spot() {
     description,
   } = useLocalSearchParams();
 
-  console.log("id", imageURL);
+  console.log(process.env.EXPO_PUBLIC_OPENWEATHER);
+
+  const fectchWeatherData = async () => {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=21.2810&lon=-157.8377&appid=${process.env.EXPO_PUBLIC_OPENWEATHER}`
+    );
+    const data = await response.json();
+    console.log(data);
+  };
+  useEffect(() => {
+    fectchWeatherData();
+  }, []);
 
   return (
     <View>

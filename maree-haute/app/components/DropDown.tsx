@@ -3,12 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 
 interface DropDownProps {
   list: string[];
-  title: string;
   isIndex: boolean;
   setSelectedItem: (item: string | number) => void;
 }
 
-export const DropDown = ({ list, title, isIndex, setSelectedItem }) => {
+export const DropDown = ({ list, isIndex, setSelectedItem }: DropDownProps) => {
   return (
     <SelectDropdown
       data={list}

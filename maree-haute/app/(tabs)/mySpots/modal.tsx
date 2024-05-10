@@ -194,9 +194,8 @@ export default function Modal() {
           <Text style={styles.inputLabel}>Surf Break</Text>
           <DropDown
             list={surfBreakOptions}
-            title="Surf Break"
             isIndex={false}
-            setSelectedItem={setSurfBreak}
+            setSelectedItem={(item: string) => setSurfBreak(item)}
           />
           <Text style={styles.inputLabel}>Address</Text>
           <TextInput
@@ -218,18 +217,16 @@ export default function Modal() {
               <Text style={styles.inputLabel}>Season Start</Text>
               <DropDown
                 list={seasonStartOptions}
-                title="Season Start"
                 isIndex={false}
-                setSelectedItem={setSeasonStart}
+                setSelectedItem={(item: string) => setSurfBreak(item)}
               />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.inputLabel}>Season End</Text>
               <DropDown
                 list={seasonEndOptions}
-                title="Season End"
                 isIndex={false}
-                setSelectedItem={setSeasonEnd}
+                setSelectedItem={(item: string) => setSurfBreak(item)}
               />
             </View>
           </View>
