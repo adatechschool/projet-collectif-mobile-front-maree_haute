@@ -5,7 +5,10 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Button,
+  Animated,
 } from "react-native";
+import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 
 export default function Spot() {
@@ -24,36 +27,46 @@ export default function Spot() {
   console.log("id", imageURL);
 
   return (
-    <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: imageURL.toString(),
-        }}
-      />
-      <View style={styles.cardContainer}>
-        <Text style={styles.cardTitleText}>{destination}</Text>
-        <Text style={[styles.cardHeadlineText, { fontWeight: "bold" }]}>
-          {destinationCountry}
-        </Text>
-        <Text>{difficulty}</Text>
-        <Text>{startSeason}</Text>
-        <Text>{endSeason}</Text>
-        <View style={styles.separator} />
-        <View
-          style={{ height: 300, width: "100%", backgroundColor: "lightgray" }}
+    <View style={{ flex: 1 }}>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: imageURL.toString(),
+          }}
         />
-        <Text>{surfBreak}</Text>
-        <Text>{description}</Text>
       </View>
-    </ScrollView>
+      <ScrollView
+        style={styles.container}
+        // stickyHeaderIndices={[0]}
+        // alwaysBounceVertical={false}
+        // bounces={false}
+      >
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardTitleText}>{destination}</Text>
+          <Text style={[styles.cardHeadlineText, { fontWeight: "bold" }]}>
+            {destinationCountry}
+          </Text>
+          <Text>{difficulty}</Text>
+          <Text>{startSeason}</Text>
+          <Text>{endSeason}</Text>
+          <View style={styles.separator} />
+          <View
+            style={{ height: 500, width: "100%", backgroundColor: "lightgray" }}
+          />
+          <Text>{surfBreak}</Text>
+          <Text>{description}</Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
+    // backgroundColor: "green",
+    zIndex: 30,
   },
   cardContainer: {
     borderTopEndRadius: 20,
@@ -61,16 +74,23 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     overflow: "hidden",
     padding: 10,
-    marginTop: -20,
-    zIndex: 10,
+    marginTop: 270,
+    // zIndex: 30,
   },
-  image: {
+  imageContainer: {
+    height: 400,
     width: "100%",
-    height: 300,
+    backgroundColor: "pink",
+    zIndex: 10,
     position: "absolute",
     top: 0,
     left: 0,
-    zIndex: -1,
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
   },
   cardTitleText: {
     fontSize: 28,
