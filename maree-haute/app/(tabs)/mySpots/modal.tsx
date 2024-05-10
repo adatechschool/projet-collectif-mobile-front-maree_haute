@@ -7,6 +7,9 @@ import {
   SafeAreaView,
   InputModeOptions,
   Image,
+  ScrollView,
+  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -15,6 +18,8 @@ import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import * as ImagePicker from "expo-image-picker";
 import { DropDown } from "../../components/DropDown";
+import { DifficultyLabel } from "../../components/Labels";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
 const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
@@ -25,37 +30,43 @@ export default function Modal() {
   // Define state variables to hold form data
   const [destination, setDestination] = useState("");
   const [location, setLocation] = useState("");
-  const [difficultyLevel, setDifficultyLevel] = useState(0);
+  const [difficultyLevel, setDifficultyLevel] = useState(null);
+
   const [surfBreak, setSurfBreak] = useState("");
   const [description, setDescription] = useState("");
   const [seasonStart, setSeasonStart] = useState("");
   const [seasonEnd, setSeasonEnd] = useState("");
 
   const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
+  const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      allowsMultipleSelection: true,
+      selectionLimit: 3,
       aspect: [4, 3],
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImages(result.assets.map((asset) => asset.uri));
     }
   };
 
-  const difficultyLevelOptions = [
-    "Novice",
-    "Beginner",
-    "Proficient",
-    "Advanced",
-    "Expert",
+  const difficultyLevels = [
+    { label: "Novice", value: 1 },
+    { label: "Beginner", value: 2 },
+    { label: "Proficient", value: 3 },
+    { label: "Advanced", value: 4 },
+    { label: "Expert", value: 5 },
   ];
+
+  const handleDifficultySelect = (value) => {
+    setDifficultyLevel(value);
+    // console.log("Selected difficulty:", value);
+  };
 
   const surfBreakOptions = [
     "Reef Break",
@@ -143,61 +154,115 @@ export default function Modal() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        <View>
+      <SafeAreaView style={{ width: "100%" }}>
+        <ScrollView style={{ padding: 25 }}>
+          <Text style={styles.inputLabel}>Destination name</Text>
           <TextInput
+            style={styles.input}
             placeholder="Destination"
             value={destination}
             onChangeText={setDestination}
           />
-
+          <Text style={styles.inputLabel}>Description</Text>
           <TextInput
-            placeholder="Location"
-            value={location}
-            onChangeText={setLocation}
+            style={styles.descriptionInput}
+            placeholder="Description"
+            value={description}
+            onChangeText={setDescription}
+            multiline={true}
+            numberOfLines={4}
           />
-
-          <View>
-            <Button
-              title="Pick an image from camera roll"
-              onPress={pickImage}
-            />
-            {image && <Image source={{ uri: image }} style={styles.image} />}
-          </View>
-
-          <DropDown
-            list={difficultyLevelOptions}
-            title="Difficulty"
-            isIndex={true}
-            setSelectedItem={setDifficultyLevel}
-          />
+          <Text style={styles.inputLabel}>Difficulty</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.horizontalContainer}
+          >
+            {difficultyLevels.map((level) => (
+              <TouchableOpacity
+                key={level.label}
+                style={[
+                  styles.difficultyOption,
+                  { opacity: difficultyLevel === level.value ? 1 : 0.4 },
+                ]}
+                onPress={() => handleDifficultySelect(level.value)}
+              >
+                <DifficultyLabel difficulty={level.value} />
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <Text style={styles.inputLabel}>Surf Break</Text>
           <DropDown
             list={surfBreakOptions}
             title="Surf Break"
             isIndex={false}
             setSelectedItem={setSurfBreak}
           />
-          <DropDown
-            list={seasonStartOptions}
-            title="Season Start"
-            isIndex={false}
-            setSelectedItem={setSeasonStart}     
-          />
-          <DropDown
-            list={seasonEndOptions}
-            title="Season End"
-            isIndex={false}
-            setSelectedItem={setSeasonEnd}
-          />
-
+          <Text style={styles.inputLabel}>Address</Text>
           <TextInput
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
+            style={styles.input}
+            placeholder="Search address"
+            value={location}
+            onChangeText={setLocation}
           />
-
-          <Button title="Submit" onPress={handleSubmit} />
-        </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              gap: 10,
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={styles.inputLabel}>Season Start</Text>
+              <DropDown
+                list={seasonStartOptions}
+                title="Season Start"
+                isIndex={false}
+                setSelectedItem={setSeasonStart}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.inputLabel}>Season End</Text>
+              <DropDown
+                list={seasonEndOptions}
+                title="Season End"
+                isIndex={false}
+                setSelectedItem={setSeasonEnd}
+              />
+            </View>
+          </View>
+          <Text style={styles.inputLabel}>Add images</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.horizontalContainer}
+          >
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={pickImages}
+              style={styles.uploadImagesButton}
+            >
+              <MaterialIcons
+                name="add-photo-alternate"
+                size={40}
+                color="#C5C5C5"
+              />
+            </TouchableOpacity>
+            {images.length > 0 &&
+              images.map((image, index) => (
+                <Image
+                  key={index}
+                  source={{ uri: image }}
+                  style={styles.uploadedImage}
+                />
+              ))}
+          </ScrollView>
+          <View style={{ marginBottom: 20 }}>
+            <Button title="Submit" onPress={handleSubmit} />
+          </View>
+        </ScrollView>
       </SafeAreaView>
       {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
       <StatusBar style="light" />
@@ -209,56 +274,62 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
-  dropdownButtonStyle: {
-    width: 200,
-    height: 50,
-    backgroundColor: "#E9ECEF",
-    borderRadius: 12,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 12,
+  inputLabel: {
+    fontSize: 16,
+    marginBottom: 10,
+    // paddingHorizontal: 25,
   },
-  dropdownButtonTxtStyle: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "500",
-    color: "#151E26",
-  },
-  dropdownButtonArrowStyle: {
-    fontSize: 28,
-  },
-  dropdownButtonIconStyle: {
-    fontSize: 28,
-    marginRight: 8,
-  },
-  dropdownMenuStyle: {
-    backgroundColor: "#E9ECEF",
-    borderRadius: 8,
-  },
-  dropdownItemStyle: {
+  input: {
+    height: 40,
     width: "100%",
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  descriptionInput: {
+    height: 120,
+    width: "100%",
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  horizontalContainer: {
     flexDirection: "row",
-    paddingHorizontal: 12,
+    alignItems: "center",
+    marginBottom: 20,
+    gap: 10,
+  },
+  difficultyOption: {
+    // paddingHorizontal: 16,
+    // paddingVertical: 8,
+    // paddingRight: 10,
+  },
+  difficultyText: {
+    fontSize: 16,
+  },
+  uploadImagesButton: {
+    height: 120,
+    width: 120,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    borderRadius: 10,
+    borderStyle: "dashed",
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 8,
   },
-  dropdownItemTxtStyle: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "500",
-    color: "#151E26",
-  },
-  dropdownItemIconStyle: {
-    fontSize: 28,
-    marginRight: 8,
-  },
-
-  image: {
-    width: 200,
-    height: 200,
+  uploadedImage: {
+    height: 120,
+    width: 120,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
   },
 });

@@ -1,16 +1,16 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs, Stack } from "expo-router";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "blue" }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: "#5EB1EF" }}>
       <Tabs.Screen
         name="index"
         options={{
           title: "Explore",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <MaterialIcons name="surfing" size={24} color={color} />
           ),
           headerShown: false,
         }}
@@ -20,7 +20,7 @@ export default function TabLayout() {
         options={{
           title: "My spots",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <MaterialIcons name="tsunami" size={24} color={color} />
           ),
           headerShown: false,
         }}
@@ -30,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <MaterialIcons name="settings" size={24} color={color} />
           ),
           headerShown: false,
         }}

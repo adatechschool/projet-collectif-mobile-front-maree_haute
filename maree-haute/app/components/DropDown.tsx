@@ -18,8 +18,13 @@ export const DropDown = ({ list, title, isIndex, setSelectedItem }) => {
       renderButton={(selectedItem, isOpened) => {
         return (
           <View style={styles.dropdownButtonStyle}>
-            <Text style={styles.dropdownButtonTxtStyle}>
-              {selectedItem || title}
+            <Text
+              style={[
+                styles.dropdownButtonTxtStyle,
+                !selectedItem && styles.placeholder,
+              ]}
+            >
+              {selectedItem ? selectedItem : "Select an option"}
             </Text>
           </View>
         );
@@ -44,20 +49,25 @@ export const DropDown = ({ list, title, isIndex, setSelectedItem }) => {
 
 const styles = StyleSheet.create({
   dropdownButtonStyle: {
-    width: 200,
-    height: 50,
-    backgroundColor: "#E9ECEF",
-    borderRadius: 12,
+    width: "100%",
+    height: 40,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
+    // backgroundColor: "#E9ECEF",
+    borderRadius: 10,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
   dropdownButtonTxtStyle: {
     flex: 1,
     fontSize: 18,
-    fontWeight: "500",
-    color: "#151E26",
+    color: "#000",
+  },
+  placeholder: {
+    color: "#BCBCBE",
   },
   dropdownButtonArrowStyle: {
     fontSize: 28,
@@ -67,8 +77,10 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   dropdownMenuStyle: {
-    backgroundColor: "#E9ECEF",
-    borderRadius: 8,
+    backgroundColor: "#F2F2F2",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#E0E0E0",
   },
   dropdownItemStyle: {
     width: "100%",

@@ -10,6 +10,7 @@ export default function Spot() {
     difficulty,
     startSeason,
     endSeason,
+    surfBreak,
     description,
   } = useLocalSearchParams();
 
@@ -29,6 +30,7 @@ export default function Spot() {
       <Text> difficulty level{difficulty}</Text>
       <Text>{startSeason}</Text>
       <Text>{endSeason}</Text>
+      <Text>{surfBreak}</Text>
       <Text>{description}</Text>
     </View>
   );
