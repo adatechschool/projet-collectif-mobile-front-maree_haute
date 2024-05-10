@@ -27,7 +27,7 @@ export default function Spot() {
   console.log("id", imageURL);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -51,9 +51,9 @@ export default function Spot() {
           <Text>{startSeason}</Text>
           <Text>{endSeason}</Text>
           <View style={styles.separator} />
-          <View
+          {/* <View
             style={{ height: 500, width: "100%", backgroundColor: "lightgray" }}
-          />
+          /> */}
           <Text>{surfBreak}</Text>
           <Text>{description}</Text>
         </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 20,
     backgroundColor: "white",
     overflow: "hidden",
-    padding: 10,
+    padding: 20,
     marginTop: 270,
     // zIndex: 30,
   },
