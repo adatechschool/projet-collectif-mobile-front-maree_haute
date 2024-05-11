@@ -261,7 +261,7 @@ export default function Modal() {
                 styles.uploadImagesButton,
                 images.length >= 5 && styles.disabledButton,
               ]}
-              disabled={images.length >= 5} // Disable button if the limit is reached
+              disabled={images.length >= 5}
             >
               <MaterialIcons
                 name={images.length >= 5 ? "block" : "add-photo-alternate"}
@@ -269,11 +269,11 @@ export default function Modal() {
                 color="#C5C5C5"
               />
               <Text style={styles.counterText}>{images.length}/5</Text>
-              {/* Counter */}
             </TouchableOpacity>
             {images.map((image, index) => (
               <View key={index} style={styles.imageContainer}>
                 <TouchableOpacity
+                  activeOpacity={0.7}
                   onPress={() => removeImage(index)}
                   style={styles.deleteButton}
                 >
