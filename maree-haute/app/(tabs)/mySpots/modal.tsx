@@ -155,24 +155,27 @@ export default function Modal() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={{ width: "100%" }}>
-        <ScrollView style={{ padding: 25 }}>
-          <Text style={styles.inputLabel}>Destination name</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Destination"
-            value={destination}
-            onChangeText={setDestination}
-          />
-          <Text style={styles.inputLabel}>Description</Text>
-          <TextInput
-            style={styles.descriptionInput}
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
-            multiline={true}
-            numberOfLines={4}
-          />
-          <Text style={styles.inputLabel}>Difficulty</Text>
+        <ScrollView style={{ paddingTop: 20 }}>
+          <View style={styles.innerContainer}>
+            <Text style={styles.inputLabel}>Destination name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Destination"
+              value={destination}
+              onChangeText={setDestination}
+            />
+            <Text style={styles.inputLabel}>Description</Text>
+            <TextInput
+              style={styles.descriptionInput}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
+              multiline={true}
+              numberOfLines={4}
+            />
+            <Text style={styles.inputLabel}>Difficulty</Text>
+          </View>
+
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -191,49 +194,51 @@ export default function Modal() {
               </TouchableOpacity>
             ))}
           </ScrollView>
-          <Text style={styles.inputLabel}>Surf Break</Text>
-          <DropDown
-            list={surfBreakOptions}
-            title="Surf Break"
-            isIndex={false}
-            setSelectedItem={setSurfBreak}
-          />
-          <Text style={styles.inputLabel}>Address</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Search address"
-            value={location}
-            onChangeText={setLocation}
-          />
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              gap: 10,
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text style={styles.inputLabel}>Season Start</Text>
-              <DropDown
-                list={seasonStartOptions}
-                title="Season Start"
-                isIndex={false}
-                setSelectedItem={setSeasonStart}
-              />
+          <View style={styles.innerContainer}>
+            <Text style={styles.inputLabel}>Surf Break</Text>
+            <DropDown
+              list={surfBreakOptions}
+              title="Surf Break"
+              isIndex={false}
+              setSelectedItem={setSurfBreak}
+            />
+            <Text style={styles.inputLabel}>Address</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Search address"
+              value={location}
+              onChangeText={setLocation}
+            />
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                gap: 10,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={styles.inputLabel}>Season Start</Text>
+                <DropDown
+                  list={seasonStartOptions}
+                  title="Season Start"
+                  isIndex={false}
+                  setSelectedItem={setSeasonStart}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.inputLabel}>Season End</Text>
+                <DropDown
+                  list={seasonEndOptions}
+                  title="Season End"
+                  isIndex={false}
+                  setSelectedItem={setSeasonEnd}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.inputLabel}>Season End</Text>
-              <DropDown
-                list={seasonEndOptions}
-                title="Season End"
-                isIndex={false}
-                setSelectedItem={setSeasonEnd}
-              />
-            </View>
+            <Text style={styles.inputLabel}>Add images</Text>
           </View>
-          <Text style={styles.inputLabel}>Add images</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -275,6 +280,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  innerContainer: {
+    paddingHorizontal: 20,
+  },
   inputLabel: {
     fontSize: 16,
     marginBottom: 10,
@@ -305,6 +313,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     gap: 10,
+    paddingHorizontal: 20,
   },
   difficultyOption: {
     // paddingHorizontal: 16,
