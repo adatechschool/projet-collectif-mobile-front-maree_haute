@@ -1,0 +1,40 @@
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity({ name: 'spots' })
+export class Spot {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  Destination_State_Country: string;
+
+  @Column()
+  Difficulty_Level: number;
+
+  @Column('simple-array')
+  Surf_Break: string[];
+
+  @Column('json', { nullable: true })
+  Photos?: { url: string }[];
+
+  @Column()
+  Peak_Surf_Season_Begins: Date;
+
+  @Column()
+  Peak_Surf_Season_Ends: Date;
+
+  @Column({ nullable: true })
+  Magic_Seaweed_Link?: string;
+
+  @Column('simple-array', { nullable: true })
+  Influencers?: string[];
+
+  @Column()
+  Geocode: string;
+
+  @Column()
+  Description: string;
+
+  @Column()
+  Liked: boolean;
+}
