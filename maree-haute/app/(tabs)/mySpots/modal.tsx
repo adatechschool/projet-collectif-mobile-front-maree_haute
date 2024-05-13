@@ -41,18 +41,28 @@ export default function Modal() {
   const [images, setImages] = useState([]);
 
   const pickImages = async () => {
+    if (images.length >= 5) return; // Check if the limit is reached
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       allowsMultipleSelection: true,
-      selectionLimit: 3,
+      selectionLimit: 5 - images.length, // Limit to remaining image slots
       aspect: [4, 3],
       quality: 1,
     });
 
     if (!result.canceled) {
-      setImages(result.assets.map((asset) => asset.uri));
+      setImages((prevImages) => [
+        ...prevImages,
+        ...result.assets.map((asset) => asset.uri),
+      ]);
     }
+  };
+
+  const removeImage = (index) => {
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    setImages(newImages);
   };
 
   const difficultyLevels = [
@@ -155,24 +165,27 @@ export default function Modal() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={{ width: "100%" }}>
-        <ScrollView style={{ padding: 25 }}>
-          <Text style={styles.inputLabel}>Destination name</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Destination"
-            value={destination}
-            onChangeText={setDestination}
-          />
-          <Text style={styles.inputLabel}>Description</Text>
-          <TextInput
-            style={styles.descriptionInput}
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
-            multiline={true}
-            numberOfLines={4}
-          />
-          <Text style={styles.inputLabel}>Difficulty</Text>
+        <ScrollView style={{ paddingTop: 20 }}>
+          <View style={styles.innerContainer}>
+            <Text style={styles.inputLabel}>Destination name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Destination"
+              value={destination}
+              onChangeText={setDestination}
+            />
+            <Text style={styles.inputLabel}>Description</Text>
+            <TextInput
+              style={styles.descriptionInput}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
+              multiline={true}
+              numberOfLines={4}
+            />
+            <Text style={styles.inputLabel}>Difficulty</Text>
+          </View>
+
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -191,49 +204,51 @@ export default function Modal() {
               </TouchableOpacity>
             ))}
           </ScrollView>
-          <Text style={styles.inputLabel}>Surf Break</Text>
-          <DropDown
-            list={surfBreakOptions}
-            title="Surf Break"
-            isIndex={false}
-            setSelectedItem={setSurfBreak}
-          />
-          <Text style={styles.inputLabel}>Address</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Search address"
-            value={location}
-            onChangeText={setLocation}
-          />
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              gap: 10,
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text style={styles.inputLabel}>Season Start</Text>
-              <DropDown
-                list={seasonStartOptions}
-                title="Season Start"
-                isIndex={false}
-                setSelectedItem={setSeasonStart}
-              />
+          <View style={styles.innerContainer}>
+            <Text style={styles.inputLabel}>Surf Break</Text>
+            <DropDown
+              list={surfBreakOptions}
+              title="Surf Break"
+              isIndex={false}
+              setSelectedItem={setSurfBreak}
+            />
+            <Text style={styles.inputLabel}>Address</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Search address"
+              value={location}
+              onChangeText={setLocation}
+            />
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                gap: 10,
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={styles.inputLabel}>Season Start</Text>
+                <DropDown
+                  list={seasonStartOptions}
+                  title="Season Start"
+                  isIndex={false}
+                  setSelectedItem={setSeasonStart}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.inputLabel}>Season End</Text>
+                <DropDown
+                  list={seasonEndOptions}
+                  title="Season End"
+                  isIndex={false}
+                  setSelectedItem={setSeasonEnd}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.inputLabel}>Season End</Text>
-              <DropDown
-                list={seasonEndOptions}
-                title="Season End"
-                isIndex={false}
-                setSelectedItem={setSeasonEnd}
-              />
-            </View>
+            <Text style={styles.inputLabel}>Add images</Text>
           </View>
-          <Text style={styles.inputLabel}>Add images</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -242,22 +257,31 @@ export default function Modal() {
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={pickImages}
-              style={styles.uploadImagesButton}
+              style={[
+                styles.uploadImagesButton,
+                images.length >= 5 && styles.disabledButton,
+              ]}
+              disabled={images.length >= 5}
             >
               <MaterialIcons
-                name="add-photo-alternate"
+                name={images.length >= 5 ? "block" : "add-photo-alternate"}
                 size={40}
                 color="#C5C5C5"
               />
+              <Text style={styles.counterText}>{images.length}/5</Text>
             </TouchableOpacity>
-            {images.length > 0 &&
-              images.map((image, index) => (
-                <Image
-                  key={index}
-                  source={{ uri: image }}
-                  style={styles.uploadedImage}
-                />
-              ))}
+            {images.map((image, index) => (
+              <View key={index} style={styles.imageContainer}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => removeImage(index)}
+                  style={styles.deleteButton}
+                >
+                  <MaterialIcons name="cancel" size={24} color="#C5C5C5" />
+                </TouchableOpacity>
+                <Image source={{ uri: image }} style={styles.uploadedImage} />
+              </View>
+            ))}
           </ScrollView>
           <View style={{ marginBottom: 20 }}>
             <Button title="Submit" onPress={handleSubmit} />
@@ -274,6 +298,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+  },
+  innerContainer: {
+    paddingHorizontal: 20,
   },
   inputLabel: {
     fontSize: 16,
@@ -305,6 +332,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     gap: 10,
+    paddingHorizontal: 20,
   },
   difficultyOption: {
     // paddingHorizontal: 16,
@@ -325,11 +353,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  disabledButton: {
+    opacity: 0.5,
+  },
+  counterText: {
+    marginTop: 5,
+    color: "#C5C5C5",
+    fontSize: 14,
+  },
   uploadedImage: {
     height: 120,
     width: 120,
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "#E0E0E0",
+  },
+  deleteButton: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    zIndex: 1,
+  },
+  imageContainer: {
+    position: "relative",
   },
 });

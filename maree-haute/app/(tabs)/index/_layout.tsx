@@ -13,6 +13,7 @@ export default function Layout() {
         options={{
           title: "Spot",
           headerShown: true,
+          // headerTransparent: true,
         }}
       />
     </Stack>
