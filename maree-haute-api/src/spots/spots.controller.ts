@@ -9,10 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { SpotsService } from './spot.service';
-import { CreateSpotDto, FindAllParams } from './dto/create-spot.dto';
+import { CreateSpotDto } from './dto/create-spot.dto';
 import { UpdateSpotDto } from './dto/update-spot.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { FindAllParams } from './dto/find-all-params.dto';
 
 @ApiTags('spots')
 @Controller('spots')

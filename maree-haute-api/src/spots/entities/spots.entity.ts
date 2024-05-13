@@ -1,5 +1,7 @@
+//Import the decorator functions from the typeorm library
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+// Define the Spot entity , for the spots table in the database
 @Entity({ name: 'spots' })
 export class Spot {
   @PrimaryGeneratedColumn()

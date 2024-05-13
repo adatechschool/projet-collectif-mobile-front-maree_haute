@@ -23,18 +23,18 @@ export class CreateSpotDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  Destination_State_Country: string; // Modifier le nom de la propriété
+  Destination_State_Country: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  Difficulty_Level: number; // Modifier le nom de la propriété
+  Difficulty_Level: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsArray()
   @IsString({ each: true })
-  Surf_Break: string[]; // Modifier le nom de la propriété
+  Surf_Break: string[];
 
   @ApiProperty()
   @IsOptional()
@@ -45,12 +45,12 @@ export class CreateSpotDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  Peak_Surf_Season_Begins: string; // Modifier le nom de la propriété
+  Peak_Surf_Season_Begins: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  Peak_Surf_Season_Ends: string; // Modifier le nom de la propriété
+  Peak_Surf_Season_Ends: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -71,31 +71,4 @@ export class CreateSpotDto {
 
   @ApiProperty()
   Liked: boolean;
-}
-
-export class FindAllParams {
-  @IsOptional()
-  @ApiProperty({
-    description: 'Maximum number of results to return',
-    type: Number,
-    example: 10,
-  })
-  limit: number = 10;
-
-  @IsOptional()
-  @ApiProperty({
-    description:
-      'Number of results to skip before starting to return the results',
-    type: Number,
-    example: 0,
-  })
-  offset: number = 0;
-  @IsOptional()
-  @ApiProperty({
-    description:
-      'Sorting object, for example: [id]=ASC to sort by id in ascending order',
-    type: String,
-    example: '[id]=ASC',
-  })
-  sort: { [key: string]: 'ASC' | 'DESC' };
 }
