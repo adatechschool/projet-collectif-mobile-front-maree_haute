@@ -52,17 +52,6 @@ export class CreateSpotDto {
   @IsString()
   Peak_Surf_Season_Ends: string;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  Magic_Seaweed_Link?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  Influencers?: string[];
-
   @ApiProperty()
   Geocode: string;
 

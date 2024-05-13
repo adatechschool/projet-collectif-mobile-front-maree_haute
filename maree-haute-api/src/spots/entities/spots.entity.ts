@@ -25,12 +25,6 @@ export class Spot {
   @Column()
   Peak_Surf_Season_Ends: Date;
 
-  @Column({ nullable: true })
-  Magic_Seaweed_Link?: string;
-
-  @Column('simple-array', { nullable: true })
-  Influencers?: string[];
-
   @Column()
   Geocode: string;
 
