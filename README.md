@@ -29,7 +29,12 @@ The aim is to discover the mobile and its approach. It was completed in 7 days b
 
 
 
+## Areas for improvement
+- animation
+- transition
+- BackEnd
+- haptic
+- weather API
 
 
 
-(axes d'amélioration)
