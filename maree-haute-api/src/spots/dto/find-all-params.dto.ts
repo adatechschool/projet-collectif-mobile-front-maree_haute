@@ -30,9 +30,9 @@ export class FindAllParams {
   @IsOptional()
   @ApiProperty({
     description:
-      'Filtering object, for example: [likes]=100 to filter by likes equal to 100',
+      'Filtering object, for example: [Difficulty_Level]=3 to filter by Difficulty equal to 3',
     type: String,
-    example: '[likes]=100',
+    example: 'Difficulty_Level=3',
   })
   filter: { [key: string]: string | number | boolean };
 }

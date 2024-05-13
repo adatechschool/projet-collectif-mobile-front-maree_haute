@@ -23,7 +23,7 @@ export class SpotsService {
     console.log('paginationOptions', paginationOptions);
 
     const findOptions: FindManyOptions<Spot> = {
-      order: paginationOptions.sort || { Destination_State_Country: 'ASC' },
+      order: paginationOptions.sort || { id: 'ASC' },
       take: paginationOptions.limit,
       skip: paginationOptions.offset,
       where: paginationOptions.filter,
