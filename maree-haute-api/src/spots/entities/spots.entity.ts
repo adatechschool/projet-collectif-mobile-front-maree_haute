@@ -8,6 +8,9 @@ export class Spot {
   id: number;
 
   @Column()
+  Destination: string;
+
+  @Column()
   Destination_State_Country: string;
 
   @Column()
