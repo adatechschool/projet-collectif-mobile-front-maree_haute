@@ -21,10 +21,7 @@ import { DropDown } from "../../components/DropDown";
 import { DifficultyLabel } from "../../components/Labels";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-const TOKEN = process.env.EXPO_PUBLIC_TOKEN2_AIRTABLE;
-const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
-const Airtable = require("airtable");
-var base = new Airtable({ apiKey: TOKEN }).base("appfYZhtggrzhPbaz");
+const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
 
 export default function Modal() {
   // Define state variables to hold form data
@@ -78,6 +75,35 @@ export default function Modal() {
     // console.log("Selected difficulty:", value);
   };
 
+  const postForm = async () => {
+    const response = await fetch(POSTGRESS_URL, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Destination: destination,
+        Destination_State_Country: location,
+        Difficulty_Level: difficultyLevel,
+        Surf_Break: [surfBreak],
+        Photos: [
+          {
+            url: "https://v5.airtableusercontent.com/v3/u/28/28/1715702400000/4vxYQP_2eGGFhSS1n8jD3A/DjW5Yxt20VMs3p2xoaEABY84w5nGp3tY1YJyiloVANVxlzxF9_swfIBAa0uryUXvY52hkvdhlNTSSDp2wAGrUqp1X0IRTBqkZcMMRtGbhz21ibIWNXICjWKtAsZDmLox/7YLcmYpFx-MfILNISO7H798KNLShEuw-7UW22tv9PfM",
+          },
+        ],
+        Peak_Surf_Season_Begins: `01/${seasonStart}/2024`,
+        Peak_Surf_Season_Ends: `01/${seasonEnd}/2024`,
+        Geocode:
+          "eyJpIjoiQW5jaG9yIFBvaW50LCBNb3JhY28iLCBNb3JhY28iLCIsIm8iOnsic3RhdHVzIjoiT0siLCJmb3JtYXR0ZWRBZGRyZXNzIjoiQW5jaG9yIFBvaW50IiwicGFsZXR0ZSI6IjIwMjQtMDktMDFUMTA6MDA6MDAuMDAwWiIsInN0cmVldEFuZCI6IjIwMjQtMTAtMDFUMTA6MDA6MDAuMDAwWiJ9fQ==",
+        Description: description,
+        Liked: false,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   const surfBreakOptions = [
     "Reef Break",
     "Point Break",
@@ -127,39 +153,6 @@ export default function Modal() {
       seasonStart,
       seasonEnd,
     });
-
-    base("Surf Destinations").create(
-      [
-        {
-          fields: {
-            Destination: destination,
-            "Destination State/Country": location,
-            "Difficulty Level": difficultyLevel,
-            "Surf Break": [surfBreak],
-            Photos: [
-              {
-                url: "",
-              },
-            ],
-            "Peak Surf Season Begins": `01/${seasonStart}/2024`,
-            "Peak Surf Season Ends": `01/${seasonEnd}/2024`,
-            "Magic Seaweed Link": "",
-            Influencers: [],
-            Geocode: "",
-            Description: description,
-          },
-        },
-      ],
-      function (err, records) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        records.forEach(function (record) {
-          console.log(record.getId());
-        });
-      }
-    );
   };
 
   return (
@@ -284,7 +277,7 @@ export default function Modal() {
             ))}
           </ScrollView>
           <View style={{ marginBottom: 20 }}>
-            <Button title="Submit" onPress={handleSubmit} />
+            <Button title="Submit" onPress={postForm} />
           </View>
         </ScrollView>
       </SafeAreaView>

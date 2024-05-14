@@ -5,27 +5,24 @@ import ListItem from "../../components/ListItem";
 import { Link } from "expo-router";
 import { FloatingButton } from "../../components/FloatingButton";
 
-const TOKEN = process.env.EXPO_PUBLIC_TOKEN_AIRTABLE;
-const AIRTABLE_URL = process.env.EXPO_PUBLIC_AIRTABLE_URL;
+const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
 
 export default function Page() {
   const [data, setData] = useState([]);
   //appelle la BDD
   const fetchData = async () => {
-    const response = await fetch(AIRTABLE_URL, {
+    const response = await fetch(POSTGRESS_URL, {
       method: "GET",
       headers: {
-        Authorization: TOKEN,
+        "Content-Type": "application/json",
       },
     });
     const fetchedData = await response.json();
 
     //record-> correspond à spot avec ses informations
-    const record = fetchedData.records.map((spot) => {
-      return spot;
-    });
-    // console.log("texte", record)
-    setData(record);
+    // console.log("texte", fetchedData)
+    console.log("texte", fetchedData);
+    setData(fetchedData);
   };
 
   useEffect(() => {
@@ -38,14 +35,14 @@ export default function Page() {
       pathname: "/[id]",
       params: {
         id: record.id,
-        imageURL: record.fields.Photos[0].url,
-        destination: record.fields.Destination,
-        destinationCountry: record.fields["Destination State/Country"],
-        difficulty: record.fields["Difficulty Level"],
-        startSeason: record.fields["Peak Surf Season Begins"],
-        endSeason: record.fields["Peak Surf Season Ends"],
-        surfBreak: record.fields["Surf Break"],
-        description: record.fields.Description,
+        imageURL: record.Photos[0].url,
+        destination: record.Destination,
+        destinationCountry: record.Destination_State_Country,
+        difficulty: record.Difficulty_Level,
+        startSeason: record.Peak_Surf_Season_Begins,
+        endSeason: record.Peak_Surf_Season_Ends,
+        surfBreak: record.Surf_Break,
+        description: record.Description,
       },
     });
   };
@@ -56,14 +53,14 @@ export default function Page() {
           {data.map((record) => (
             <ListItem
               key={record.id}
-              imageURL={record.fields.Photos[0].url}
-              destination={record.fields.Destination}
-              destinationCountry={record.fields["Destination State/Country"]}
-              difficulty={record.fields["Difficulty Level"]}
-              startSeason={record.fields["Peak Surf Season Begins"]}
-              endSeason={record.fields["Peak Surf Season Ends"]}
-              surfBreak={record.fields["Surf Break"]}
-              description={record.fields.Description}
+              imageURL={record.Photos[0].url}
+              destination={record.Destination}
+              destinationCountry={record.Destination_State_Country}
+              difficulty={record.Difficulty_Level}
+              startSeason={record.Peak_Surf_Season_Begins}
+              endSeason={record.Peak_Surf_Season_Ends}
+              surfBreak={record.Surf_Break}
+              description={record.Description}
               onPress={() => navigateToDetail(record)}
             />
           ))}
