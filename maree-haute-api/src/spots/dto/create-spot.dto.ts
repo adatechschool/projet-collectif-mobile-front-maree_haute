@@ -23,7 +23,7 @@ export class CreateSpotDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  Destination_State_Country: string;
+  Address?: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -53,11 +53,11 @@ export class CreateSpotDto {
   Peak_Surf_Season_Ends: string;
 
   @ApiProperty()
-  Geocode: string;
+  GPS?: string;
 
   @ApiProperty()
   Description: string;
 
-  @ApiProperty()
-  Liked: boolean;
+  // @ApiProperty()
+  // Liked: boolean;
 }

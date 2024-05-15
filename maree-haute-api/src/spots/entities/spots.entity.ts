@@ -11,7 +11,7 @@ export class Spot {
   Destination: string;
 
   @Column()
-  Destination_State_Country: string;
+  Address?: string;
 
   @Column()
   Difficulty_Level: number;
@@ -29,11 +29,11 @@ export class Spot {
   Peak_Surf_Season_Ends: Date;
 
   @Column()
-  Geocode: string;
+  GPS?: string;
 
   @Column()
   Description: string;
 
-  @Column()
-  Liked: boolean;
+  // @Column()
+  // Liked: boolean;
 }
