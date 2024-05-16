@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import ListItem from "../../components/ListItem";
@@ -46,26 +46,31 @@ export default function Page() {
       },
     });
   };
+
+  const renderListItem = ({ item }) => (
+    <ListItem
+      key={item.id}
+      imageURL={item.photos[0].url}
+      destination={item.destination}
+      destinationCountry={item.address}
+      difficulty={item.difficulty_Level}
+      startSeason={item.peak_Surf_Season_Begins}
+      endSeason={item.peak_Surf_Season_Ends}
+      surfBreak={item.surf_Break}
+      description={item.description}
+      onPress={() => navigateToDetail(item)}
+    />
+  );
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.main}>
-          {data.map((record) => (
-            <ListItem
-              key={record.id}
-              imageURL={record.photos[0].url}
-              destination={record.destination}
-              destinationCountry={record.address}
-              difficulty={record.difficulty_Level}
-              startSeason={record.peak_Surf_Season_Begins}
-              endSeason={record.peak_Surf_Season_Ends}
-              surfBreak={record.surf_Break}
-              description={record.description}
-              onPress={() => navigateToDetail(record)}
-            />
-          ))}
-        </View>
-      </ScrollView>
+      <FlatList
+        data={data}
+        renderItem={renderListItem}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={() => console.log("End reached")}
+        onEndReachedThreshold={0.5}
+      />
       <FloatingButton
         icon={"map"}
         text="Map"
