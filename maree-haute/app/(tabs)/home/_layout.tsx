@@ -16,6 +16,14 @@ export default function Layout() {
           // headerTransparent: true,
         }}
       />
+      <Stack.Screen
+        name="searchModal"
+        options={{
+          headerTransparent: true,
+          presentation: "modal",
+          title: "Search",
+        }}
+      />
     </Stack>
   );
 }
