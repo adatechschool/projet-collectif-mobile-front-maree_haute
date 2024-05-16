@@ -1,8 +1,10 @@
 //Import the decorator functions from the typeorm library
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { List } from '../../list/entities/list.entity';
+import { User } from 'src/user/entities/user.entity';
 
-// Define the Spot entity , for the spots table in the database
-@Entity({ name: 'spots' })
+// Define the Spot entity , for the spot table in the database
+@Entity({ name: 'spot' })
 export class Spot {
   @PrimaryGeneratedColumn()
   id: number;
@@ -33,6 +35,12 @@ export class Spot {
 
   @Column()
   Description: string;
+
+  @ManyToOne(() => User, (user) => user.id)
+  creator: User;
+
+  @ManyToOne(() => List, (list) => list.spots)
+  list: List;
 
   // @Column()
   // Liked: boolean;
