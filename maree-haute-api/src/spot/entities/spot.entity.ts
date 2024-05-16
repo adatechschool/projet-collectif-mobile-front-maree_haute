@@ -10,37 +10,37 @@ export class Spot {
   id: number;
 
   @Column()
-  Destination: string;
+  destination: string;
 
   @Column()
-  Address?: string;
+  address?: string;
 
   @Column()
-  Difficulty_Level: number;
+  difficulty_Level: number;
 
   @Column('simple-array')
-  Surf_Break: string[];
+  surf_Break: string[];
 
   @Column('json', { nullable: true })
-  Photos?: { url: string }[];
+  photos?: { url: string }[];
 
   @Column()
-  Peak_Surf_Season_Begins: Date;
+  peak_Surf_Season_Begins: number;
 
   @Column()
-  Peak_Surf_Season_Ends: Date;
+  peak_Surf_Season_Ends: number;
 
   @Column()
   GPS?: string;
 
   @Column()
-  Description: string;
+  description: string;
 
   @ManyToOne(() => User, (user) => user.id)
-  creator: User;
+  creator?: User;
 
   @ManyToOne(() => List, (list) => list.id)
-  list: List;
+  list?: List;
   // @Column()
   // Liked: boolean;
 }
