@@ -32,7 +32,7 @@ export default function Page() {
   const navigateToDetail = (record) => {
     // Navigate to detailed view with specified params
     router.push({
-      pathname: "/[id]",
+      pathname: "/home/[id]",
       params: {
         id: record.id,
         imageURL: record.photos[0].url,
