@@ -46,12 +46,10 @@ export class CreateSpotDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
   peak_Surf_Season_Begins: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
   peak_Surf_Season_Ends: number;
 
   @ApiProperty()
