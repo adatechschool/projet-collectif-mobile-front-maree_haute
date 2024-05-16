@@ -13,6 +13,7 @@ import { Link } from "expo-router";
 import { FloatingButton } from "../../components/FloatingButton";
 import { BlurView } from "expo-blur";
 import { FiltersButton } from "../../components/Buttons";
+import * as Haptics from "expo-haptics";
 
 const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
 
@@ -73,7 +74,6 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Button title="Search" onPress={() => router.push("/home/searchModal")} />
       <FlatList
         style={styles.main}
         data={data}
@@ -96,7 +96,10 @@ export default function Page() {
           <FiltersButton
             icon={"tune"}
             text="Filters"
-            onPress={() => router.push("/home/searchModal")}
+            onPress={() => {
+              Haptics.selectionAsync();
+              router.push("/home/searchModal");
+            }}
           />
           <FiltersButton
             icon={"support"}
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
     width: "100%",
     // backgroundColor: "pink",
     padding: 10,
-    marginTop: 30,
+    marginTop: 70,
   },
   link: {
     width: "100%",

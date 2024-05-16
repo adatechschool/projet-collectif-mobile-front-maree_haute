@@ -15,7 +15,8 @@
     "react-native-screens": "3.31.1",
     "react-native-select-dropdown": "^4.0.1",
     "react-native-web": "~0.19.6",
-    "expo-blur": "~13.0.2"
+    "expo-blur": "~13.0.2",
+    "expo-haptics": "~13.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
