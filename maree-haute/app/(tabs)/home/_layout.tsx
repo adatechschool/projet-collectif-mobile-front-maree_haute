@@ -12,7 +12,7 @@ export default function Layout() {
         name="[id]"
         options={{
           title: "Spot",
-          headerShown: true,
+          headerShown: false,
           // headerTransparent: true,
         }}
       />
