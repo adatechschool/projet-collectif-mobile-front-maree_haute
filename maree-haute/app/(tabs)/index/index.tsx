@@ -35,14 +35,14 @@ export default function Page() {
       pathname: "/[id]",
       params: {
         id: record.id,
-        imageURL: record.Photos[0].url,
-        destination: record.Destination,
-        destinationCountry: record.Destination_State_Country,
-        difficulty: record.Difficulty_Level,
-        startSeason: record.Peak_Surf_Season_Begins,
-        endSeason: record.Peak_Surf_Season_Ends,
-        surfBreak: record.Surf_Break,
-        description: record.Description,
+        imageURL: record.photos[0].url,
+        destination: record.destination,
+        destinationCountry: record.destination_State_Country,
+        difficulty: record.difficulty_Level,
+        startSeason: record.peak_Surf_Season_Begins,
+        endSeason: record.peak_Surf_Season_Ends,
+        surfBreak: record.surf_Break,
+        description: record.description,
       },
     });
   };
@@ -53,14 +53,14 @@ export default function Page() {
           {data.map((record) => (
             <ListItem
               key={record.id}
-              imageURL={record.Photos[0].url}
-              destination={record.Destination}
-              destinationCountry={record.Destination_State_Country}
-              difficulty={record.Difficulty_Level}
-              startSeason={record.Peak_Surf_Season_Begins}
-              endSeason={record.Peak_Surf_Season_Ends}
-              surfBreak={record.Surf_Break}
-              description={record.Description}
+              imageURL={record.photos[0].url}
+              destination={record.destination}
+              destinationCountry={record.address}
+              difficulty={record.difficulty_Level}
+              startSeason={record.peak_Surf_Season_Begins}
+              endSeason={record.peak_Surf_Season_Ends}
+              surfBreak={record.surf_Break}
+              description={record.description}
               onPress={() => navigateToDetail(record)}
             />
           ))}
