@@ -83,21 +83,20 @@ export default function Modal() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Destination: destination,
-        Destination_State_Country: location,
-        Difficulty_Level: difficultyLevel,
-        Surf_Break: [surfBreak],
-        Photos: [
+        destination: destination,
+        address: location,
+        difficulty_Level: difficultyLevel,
+        surf_Break: [surfBreak],
+        photos: [
           {
-            url: "https://v5.airtableusercontent.com/v3/u/28/28/1715702400000/4vxYQP_2eGGFhSS1n8jD3A/DjW5Yxt20VMs3p2xoaEABY84w5nGp3tY1YJyiloVANVxlzxF9_swfIBAa0uryUXvY52hkvdhlNTSSDp2wAGrUqp1X0IRTBqkZcMMRtGbhz21ibIWNXICjWKtAsZDmLox/7YLcmYpFx-MfILNISO7H798KNLShEuw-7UW22tv9PfM",
+            url: "https://www.goodfreephotos.com/albums/sports/man-surfing-a-wave-at-sunset.jpg",
           },
         ],
-        Peak_Surf_Season_Begins: `01/${seasonStart}/2024`,
-        Peak_Surf_Season_Ends: `01/${seasonEnd}/2024`,
-        Geocode:
-          "eyJpIjoiQW5jaG9yIFBvaW50LCBNb3JhY28iLCBNb3JhY28iLCIsIm8iOnsic3RhdHVzIjoiT0siLCJmb3JtYXR0ZWRBZGRyZXNzIjoiQW5jaG9yIFBvaW50IiwicGFsZXR0ZSI6IjIwMjQtMDktMDFUMTA6MDA6MDAuMDAwWiIsInN0cmVldEFuZCI6IjIwMjQtMTAtMDFUMTA6MDA6MDAuMDAwWiJ9fQ==",
-        Description: description,
-        Liked: false,
+        peak_Surf_Season_Begins: seasonStart,
+        peak_Surf_Season_Ends: seasonEnd,
+        GPS:
+          "28°02'11.8\"S 153°26'13.1\"E",
+        description: description,
       }),
     });
     const data = await response.json();
@@ -226,7 +225,7 @@ export default function Modal() {
                 <DropDown
                   list={seasonStartOptions}
                   title="Season Start"
-                  isIndex={false}
+                  isIndex={true}
                   setSelectedItem={setSeasonStart}
                 />
               </View>
@@ -235,7 +234,7 @@ export default function Modal() {
                 <DropDown
                   list={seasonEndOptions}
                   title="Season End"
-                  isIndex={false}
+                  isIndex={true}
                   setSelectedItem={setSeasonEnd}
                 />
               </View>
