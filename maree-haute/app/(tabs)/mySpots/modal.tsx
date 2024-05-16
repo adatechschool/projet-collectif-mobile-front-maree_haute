@@ -94,13 +94,14 @@ export default function Modal() {
         ],
         peak_Surf_Season_Begins: seasonStart,
         peak_Surf_Season_Ends: seasonEnd,
-        GPS:
-          "28°02'11.8\"S 153°26'13.1\"E",
+        GPS: "28°02'11.8\"S 153°26'13.1\"E",
         description: description,
       }),
     });
     const data = await response.json();
     console.log(data);
+
+    router.back();
   };
 
   const surfBreakOptions = [
