@@ -7,6 +7,7 @@ import {
   Button,
 } from "react-native";
 import { DifficultyLabel, SurfBreakLabel, SeasonLabel } from "./Labels";
+import { BlurView } from "expo-blur";
 
 interface Props {
   imageURL: string;
@@ -58,7 +59,7 @@ export default function ListItem({
         <SurfBreakLabel surfBreak={surfBreak} />
         <DifficultyLabel difficulty={difficulty} />
       </View>
-      <View style={styles.card}>
+      <BlurView intensity={60} tint="extraLight" style={styles.card}>
         <View style={styles.cardText}>
           <Text style={styles.cardTitleText}>{destination}</Text>
           <View style={styles.cardSubText}>
@@ -67,12 +68,6 @@ export default function ListItem({
             </Text>
             <Text style={styles.cardHeadlineText}></Text>
           </View>
-          {/* <View style={styles.cardSubText}>
-            <Text style={styles.cardHeadlineText}>
-              {formatMonth(startSeason)} - {formatMonth(endSeason)}
-            </Text>
-            <Text style={styles.cardHeadlineText}>{surfBreak}</Text>
-          </View> */}
           <Text
             numberOfLines={2}
             ellipsizeMode="tail"
@@ -81,7 +76,7 @@ export default function ListItem({
             {description}
           </Text>
         </View>
-      </View>
+      </BlurView>
     </TouchableOpacity>
   );
 }
@@ -95,6 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     borderRadius: 20,
     overflow: "hidden",
+    marginBottom: 10,
   },
   backgroundImageContainer: {
     position: "absolute",
@@ -110,7 +106,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "100%",
-    backgroundColor: "#FCFCFC",
+    // backgroundColor: "#FCFCFC",
     padding: 10,
     borderRadius: 15,
     overflow: "hidden",
@@ -118,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    opacity: 0.7,
+    // opacity: 0.7,
   },
   cardText: {
     display: "flex",

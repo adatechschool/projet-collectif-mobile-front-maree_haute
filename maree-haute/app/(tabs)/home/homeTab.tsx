@@ -71,8 +71,9 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Button title="Search" onPress={() => router.push("/home/searchModal")} />
+      {/* <Button title="Search" onPress={() => router.push("/home/searchModal")} /> */}
       <FlatList
+        style={styles.main}
         data={data}
         renderItem={renderListItem}
         keyExtractor={(item) => item.id.toString()}
@@ -103,7 +104,6 @@ const styles = StyleSheet.create({
     width: "100%",
     // backgroundColor: "pink",
     padding: 10,
-    gap: 10,
   },
   link: {
     width: "100%",
