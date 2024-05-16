@@ -2,32 +2,43 @@ import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import ListItem from "../../components/ListItem";
-import { Link } from "expo-router";
 import { FloatingButton } from "../../components/FloatingButton";
 
 const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
 
 export default function Page() {
   const [data, setData] = useState([]);
+  const [paginationOptions, setPaginationOptions] = useState({
+    limit: 2,
+    offset: 0,
+  });
+
   //appelle la BDD
   const fetchData = async () => {
-    const response = await fetch(POSTGRESS_URL, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${POSTGRESS_URL}?limit=${paginationOptions.limit}&offset=${paginationOptions.offset}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const fetchedData = await response.json();
 
-    //record-> correspond à spot avec ses informations
-    // console.log("texte", fetchedData)
-    console.log("texte", fetchedData);
-    setData(fetchedData);
+    setData((prevData) => [...prevData, ...fetchedData]);
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [paginationOptions]);
+
+  const fetchMoreData = () => {
+    setPaginationOptions((prevOptions) => ({
+      ...prevOptions,
+      offset: prevOptions.offset + prevOptions.limit,
+    }));
+  };
 
   const navigateToDetail = (record) => {
     // Navigate to detailed view with specified params
@@ -50,6 +61,7 @@ export default function Page() {
   const renderListItem = ({ item }) => (
     <ListItem
       key={item.id}
+      {...item}
       imageURL={item.photos[0].url}
       destination={item.destination}
       destinationCountry={item.address}
@@ -68,8 +80,8 @@ export default function Page() {
         data={data}
         renderItem={renderListItem}
         keyExtractor={(item) => item.id.toString()}
-        onEndReached={() => console.log("End reached")}
-        onEndReachedThreshold={0.5}
+        onEndReached={fetchMoreData}
+        onEndReachedThreshold={0.1}
       />
       <FloatingButton
         icon={"map"}
