@@ -23,7 +23,7 @@ export class FindAllParams {
     description:
       'Sorting object, for example: [id]=ASC to sort by id in ascending order',
     type: String,
-    example: '[id]=ASC',
+    example: '[{id: "ASC"}]',
   })
   sort: { [key: string]: 'ASC' | 'DESC' };
 
@@ -32,7 +32,7 @@ export class FindAllParams {
     description:
       'Filtering object, for example: [Difficulty_Level]=3 to filter by Difficulty equal to 3',
     type: String,
-    example: 'Difficulty_Level=3',
+    example: '[{Difficulty_Level : 3}]',
   })
   filter: { [key: string]: string | number | boolean };
 }

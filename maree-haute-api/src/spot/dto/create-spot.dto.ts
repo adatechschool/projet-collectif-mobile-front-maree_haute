@@ -8,6 +8,8 @@ import {
   IsUrl,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { User } from 'src/user/entities/user.entity';
+import { List } from 'src/list/entities/list.entity';
 
 export class Photo {
   @IsUrl({ require_tld: false })
@@ -18,46 +20,50 @@ export class CreateSpotDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  Destination: string;
+  destination: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  Destination_State_Country: string;
+  address?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  Difficulty_Level: number;
+  difficulty_Level: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsArray()
   @IsString({ each: true })
-  Surf_Break: string[];
+  surf_Break: string[];
 
   @ApiProperty()
   @IsOptional()
   @IsArray()
   @Type(() => Photo)
-  Photos?: { url: string }[];
+  photos?: { url: string }[];
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  Peak_Surf_Season_Begins: string;
+  peak_Surf_Season_Begins: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  Peak_Surf_Season_Ends: string;
+  peak_Surf_Season_Ends: number;
 
   @ApiProperty()
-  Geocode: string;
+  GPS?: string;
 
   @ApiProperty()
-  Description: string;
+  description: string;
 
   @ApiProperty()
-  Liked: boolean;
+  creator: User;
+
+  @ApiProperty()
+  list: List;
+
+  // @ApiProperty()
+  // Liked: boolean;
 }

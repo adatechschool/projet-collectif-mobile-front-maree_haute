@@ -8,17 +8,17 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { SpotsService } from './spot.service';
+import { SpotService } from './spot.service';
 import { CreateSpotDto } from './dto/create-spot.dto';
 import { UpdateSpotDto } from './dto/update-spot.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { FindAllParams } from './dto/find-all-params.dto';
 
-@ApiTags('spots')
-@Controller('spots')
-export class SpotsController {
-  constructor(private readonly spotsService: SpotsService) {}
+@ApiTags('spot')
+@Controller('spot')
+export class SpotController {
+  constructor(private readonly spotService: SpotService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create spot' })
@@ -27,14 +27,14 @@ export class SpotsController {
     description: 'The spot has been successfully created.',
   })
   create(@Body(new ValidationPipe()) createSpotDto: CreateSpotDto) {
-    return this.spotsService.create(createSpotDto);
+    return this.spotService.create(createSpotDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all spots' })
-  @ApiResponse({ status: 200, description: 'Return all spots.' })
+  @ApiOperation({ summary: 'Get all spot' })
+  @ApiResponse({ status: 200, description: 'Return all spot.' })
   findAll(@Query() params: FindAllParams) {
-    return this.spotsService.findAll(params);
+    return this.spotService.findAll(params);
   }
 
   @Get(':id')
@@ -42,7 +42,7 @@ export class SpotsController {
   @ApiResponse({ status: 200, description: 'Return the spot.' })
   @ApiResponse({ status: 404, description: 'Not found.' })
   findOne(@Param('id') id: string) {
-    return this.spotsService.findOne(+id);
+    return this.spotService.findOne(+id);
   }
 
   @Patch(':id')
@@ -53,7 +53,7 @@ export class SpotsController {
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   update(@Param('id') id: string, @Body() updateSpotDto: UpdateSpotDto) {
-    return this.spotsService.update(+id, updateSpotDto);
+    return this.spotService.update(+id, updateSpotDto);
   }
 
   @Delete(':id')
@@ -64,6 +64,6 @@ export class SpotsController {
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   remove(@Param('id') id: string) {
-    return this.spotsService.remove(+id);
+    return this.spotService.remove(+id);
   }
 }

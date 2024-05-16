@@ -2,21 +2,21 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSpotDto } from './dto/create-spot.dto';
 import { UpdateSpotDto } from './dto/update-spot.dto';
 import { Repository, FindManyOptions } from 'typeorm';
-import { Spot } from './entities/spots.entity';
+import { Spot } from './entities/Spot.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindAllParams } from './dto/find-all-params.dto';
 
-/// SpotsService is used to perform CRUD operations on spots and encapsulate the associated business logic.
+/// spotService is used to perform CRUD operations on spot and encapsulate the associated business logic.
 @Injectable()
-export class SpotsService {
+export class SpotService {
   constructor(
     @InjectRepository(Spot)
-    private readonly spotsRepository: Repository<Spot>,
+    private readonly spotRepository: Repository<Spot>,
   ) {}
 
   async create(createSpotDto: CreateSpotDto) {
-    const spot = this.spotsRepository.create(createSpotDto);
-    return await this.spotsRepository.save(spot);
+    const spot = this.spotRepository.create(createSpotDto);
+    return await this.spotRepository.save(spot);
   }
   //
   async findAll(paginationOptions: FindAllParams) {
@@ -29,20 +29,20 @@ export class SpotsService {
       where: paginationOptions.filter,
     };
 
-    return await this.spotsRepository.find(findOptions);
+    return await this.spotRepository.find(findOptions);
   }
 
   async findOne(id: number) {
-    return await this.spotsRepository.findOne({ where: { id } });
+    return await this.spotRepository.findOne({ where: { id } });
   }
 
   async update(id: number, updateSpotDto: UpdateSpotDto) {
     const spot = await this.findOne(id);
     if (!spot) {
-      throw new NotFoundException(`City #${id} not found`);
+      throw new NotFoundException(`Spot #${id} not found`);
     }
     Object.assign(spot, updateSpotDto);
-    return await this.spotsRepository.save(spot);
+    return await this.spotRepository.save(spot);
   }
 
   async remove(id: number) {
@@ -50,6 +50,6 @@ export class SpotsService {
     if (!spot) {
       throw new NotFoundException(`spot #${id} not found`);
     }
-    return await this.spotsRepository.remove(spot);
+    return await this.spotRepository.remove(spot);
   }
 }

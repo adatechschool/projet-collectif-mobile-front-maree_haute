@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
-import { SpotsModule } from './spots/spots.module';
+import { SpotModule } from './spot/spot.module';
+import { ListModule } from './list/list.module';
+import { UserModule } from './user/user.module';
 
 console.log(`coucou`, process.env.POSTGRES_HOST);
 @Module({
@@ -26,7 +28,9 @@ console.log(`coucou`, process.env.POSTGRES_HOST);
         synchronize: true,
       }),
     }),
-    SpotsModule,
+    SpotModule,
+    ListModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
