@@ -19,6 +19,8 @@ const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
 
 export default function Page() {
   const [data, setData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+  const [isBeginnersFilterActive, setIsBeginnersFilterActive] = useState(false);
   //appelle la BDD
   const fetchData = async () => {
     const response = await fetch(POSTGRESS_URL, {
@@ -32,6 +34,7 @@ export default function Page() {
     //record-> correspond à spot avec ses informations
     // console.log("texte", fetchedData)
     console.log("texte", fetchedData);
+    setOriginalData(fetchedData);
     setData(fetchedData);
   };
 
@@ -41,16 +44,23 @@ export default function Page() {
 
   //filtre "for beginners"
   const handleBeginnersFilter = async () => {
-    const url = POSTGRESS_URL + "?filter[difficulty_Level]=1";
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const dataFilteredByLevel1 = await response.json();
-    setData(dataFilteredByLevel1);
-    // console.log("test bouton for beginners", dataFilteredByLevel1);
+    if (isBeginnersFilterActive) {
+      // If the filter is active, deactivate it by restoring original data
+      setData(originalData);
+    } else {
+      // If the filter is inactive, activate it by fetching filtered data
+      const url = POSTGRESS_URL + "?filter[difficulty_Level]=1";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const dataFilteredByLevel1 = await response.json();
+      setData(dataFilteredByLevel1);
+    }
+    // Toggle the filter state
+    setIsBeginnersFilterActive(!isBeginnersFilterActive);
   };
 
   const navigateToDetail = (record) => {
@@ -120,6 +130,7 @@ export default function Page() {
             text="For Beginners"
             onPress={handleBeginnersFilter}
             primary={false}
+            selected={isBeginnersFilterActive}
           />
           <FiltersButton
             icon={"favorite"}

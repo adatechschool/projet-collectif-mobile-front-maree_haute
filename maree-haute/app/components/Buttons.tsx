@@ -2,15 +2,25 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-export function FiltersButton({ icon, text, onPress, primary = true }) {
+export function FiltersButton({
+  icon,
+  text,
+  onPress,
+  primary = true,
+  selected = false,
+}) {
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={onPress}
-      style={[styles.container, primary ? styles.primary : styles.secondary]}
+      style={[
+        styles.container,
+        primary ? styles.primary : styles.secondary,
+        selected && styles.selected,
+      ]}
     >
       <MaterialIcons
-        name={icon}
+        name={selected ? "close" : icon}
         size={24}
         color={primary ? "white" : "black"}
       />
@@ -46,6 +56,9 @@ const styles = StyleSheet.create({
   secondary: {
     backgroundColor: "#fff",
     borderColor: "#000",
+  },
+  selected: {
+    opacity: 0.4,
   },
   text: {
     fontWeight: "bold",
