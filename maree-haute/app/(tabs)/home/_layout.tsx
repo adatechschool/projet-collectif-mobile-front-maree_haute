@@ -1,4 +1,6 @@
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
+import { Button } from "react-native";
+
 export default function Layout() {
   return (
     <Stack>
@@ -12,8 +14,19 @@ export default function Layout() {
         name="[id]"
         options={{
           title: "Spot",
-          headerShown: true,
+          headerShown: false,
           // headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="searchModal"
+        options={{
+          headerTransparent: true,
+          presentation: "modal",
+          title: "Filters",
+          headerLeft: () => (
+            <Button onPress={() => router.back()} title="Cancel" />
+          ),
         }}
       />
     </Stack>

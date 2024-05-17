@@ -18,7 +18,7 @@ import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import * as ImagePicker from "expo-image-picker";
 import { DropDown } from "../../components/DropDown";
-import { DifficultyLabel } from "../../components/Labels";
+import { DifficultyLabel, LargeDifficultyLabel } from "../../components/Labels";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
@@ -94,13 +94,14 @@ export default function Modal() {
         ],
         peak_Surf_Season_Begins: seasonStart,
         peak_Surf_Season_Ends: seasonEnd,
-        GPS:
-          "28°02'11.8\"S 153°26'13.1\"E",
+        GPS: "28°02'11.8\"S 153°26'13.1\"E",
         description: description,
       }),
     });
     const data = await response.json();
     console.log(data);
+
+    router.back();
   };
 
   const surfBreakOptions = [
@@ -192,7 +193,7 @@ export default function Modal() {
                 ]}
                 onPress={() => handleDifficultySelect(level.value)}
               >
-                <DifficultyLabel difficulty={level.value} />
+                <LargeDifficultyLabel difficulty={level.value} />
               </TouchableOpacity>
             ))}
           </ScrollView>
