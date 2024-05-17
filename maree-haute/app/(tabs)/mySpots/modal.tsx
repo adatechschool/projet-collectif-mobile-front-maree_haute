@@ -18,7 +18,7 @@ import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import * as ImagePicker from "expo-image-picker";
 import { DropDown } from "../../components/DropDown";
-import { DifficultyLabel } from "../../components/Labels";
+import { DifficultyLabel, LargeDifficultyLabel } from "../../components/Labels";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
@@ -193,7 +193,7 @@ export default function Modal() {
                 ]}
                 onPress={() => handleDifficultySelect(level.value)}
               >
-                <DifficultyLabel difficulty={level.value} />
+                <LargeDifficultyLabel difficulty={level.value} />
               </TouchableOpacity>
             ))}
           </ScrollView>
