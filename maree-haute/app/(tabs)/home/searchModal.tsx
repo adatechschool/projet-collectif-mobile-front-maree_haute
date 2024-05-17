@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { DropDown } from "../../components/DropDown";
-import { DifficultyLabel } from "../../components/Labels";
+import { DifficultyLabel, LargeDifficultyLabel } from "../../components/Labels";
 
 export default function searchModal() {
   const [filter, setFilter] = useState("");
@@ -67,7 +67,7 @@ export default function searchModal() {
             ]}
             onPress={() => handleDifficultySelect(level.value)}
           >
-            <DifficultyLabel difficulty={level.value} />
+            <LargeDifficultyLabel difficulty={level.value} />
           </TouchableOpacity>
         ))}
       </ScrollView>

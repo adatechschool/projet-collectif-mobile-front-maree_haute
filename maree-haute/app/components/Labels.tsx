@@ -199,12 +199,12 @@ export function LargeDifficultyLabel({ difficulty }) {
         </Text>
         <MaterialIcons
           name={difficultyInfo.icon}
-          size={160}
+          size={130}
           color={difficultyInfo.textShadowColor}
           style={{
             position: "absolute",
-            bottom: -50,
-            right: -35,
+            bottom: -30,
+            right: -20,
             opacity: 0.3,
           }}
         />
