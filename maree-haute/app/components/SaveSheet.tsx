@@ -2,22 +2,32 @@ import { View, Text, StyleSheet, Button } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function SaveSheet({ visible }) {
+export default function SaveSheet({ visible, spotID }) {
   const [list, setList] = useState([]);
   const getData = async () => {
     try {
-      const listName = [{ name: "Saved" }];
-      const jsonValue = JSON.stringify(listName);
-      await AsyncStorage.setItem("savedList", jsonValue);
-
       const value = await AsyncStorage.getItem("savedList");
       console.log("savedList", value);
       if (value !== null) {
         // value previously stored
+        console.log("bonjour", value);
         setList(JSON.parse(value));
       }
     } catch (e) {
-      // error reading value
+      console.error(e);
+    }
+  };
+
+  const handleData = async (index) => {
+    try {
+      const listname = [...list];
+      listname[index].savedSpotsId.push(spotID);
+      console.log(listname[index].savedSpotsId);
+      console.log(listname);
+      const jsonValue = JSON.stringify(listname);
+      await AsyncStorage.setItem("savedList", jsonValue);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -27,6 +37,13 @@ export default function SaveSheet({ visible }) {
 
   return (
     <View style={styles.container}>
+      {list.map((item, index) => (
+        <Button
+          key={index}
+          title={item.name}
+          onPress={() => handleData(index)}
+        />
+      ))}
       <Button
         title="Save"
         onPress={() => {

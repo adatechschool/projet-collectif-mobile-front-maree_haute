@@ -81,7 +81,7 @@ export default function Spot() {
         />
       </ScrollView>
 
-      {showSaveSheet && <SaveSheet visible={setShowSaveSheet} />}
+      {showSaveSheet && <SaveSheet spotID={id} visible={setShowSaveSheet} />}
     </View>
   );
 }
