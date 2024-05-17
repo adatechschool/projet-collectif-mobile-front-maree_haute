@@ -39,9 +39,9 @@ export default function Page() {
     fetchData();
   }, []);
 
- //filtre "for beginners"
- const handleBeginnersFilter = async () => {
-    const url = POSTGRESS_URL + "?filter[difficulty_Level]=1"
+  //filtre "for beginners"
+  const handleBeginnersFilter = async () => {
+    const url = POSTGRESS_URL + "?filter[difficulty_Level]=1";
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -50,7 +50,7 @@ export default function Page() {
     });
     const dataFilteredByLevel1 = await response.json();
     setData(dataFilteredByLevel1);
-    // console.log("test bouton for beginners", dataFilteredByLevel1);   
+    // console.log("test bouton for beginners", dataFilteredByLevel1);
   };
 
   const navigateToDetail = (record) => {
