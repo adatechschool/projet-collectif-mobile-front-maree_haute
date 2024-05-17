@@ -97,7 +97,7 @@ export default function Page() {
             icon={"tune"}
             text="Filters"
             onPress={() => {
-              Haptics.selectionAsync();
+              // Haptics.selectionAsync();
               router.push("/home/searchModal");
             }}
           />
