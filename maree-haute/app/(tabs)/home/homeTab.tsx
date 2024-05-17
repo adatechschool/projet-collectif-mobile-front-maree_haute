@@ -21,6 +21,11 @@ export default function Page() {
   const [data, setData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [isBeginnersFilterActive, setIsBeginnersFilterActive] = useState(false);
+
+  // useEffect(() => {
+  //   defaultSavedList("savedList");
+  // }, []);
+
   //appelle la BDD
   const fetchData = async () => {
     const response = await fetch(POSTGRESS_URL, {
@@ -40,6 +45,7 @@ export default function Page() {
 
   useEffect(() => {
     fetchData();
+    // defaultSavedList();
   }, []);
 
   //filtre "for beginners"
@@ -144,6 +150,7 @@ export default function Page() {
             onPress={() => router.push("/home/searchModal")}
             primary={false}
           />
+          {/* <Button title="test" onPress={() => console.log(existingList)} /> */}
         </ScrollView>
       </View>
     </View>

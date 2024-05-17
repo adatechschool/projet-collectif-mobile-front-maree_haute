@@ -10,8 +10,12 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SaveSheet from "../../components/SaveSheet";
 
 export default function Spot() {
+  const [showSaveSheet, setShowSaveSheet] = useState(false);
+
   const {
     id,
     imageURL,
@@ -25,6 +29,15 @@ export default function Spot() {
   } = useLocalSearchParams();
 
   console.log("id", imageURL);
+
+  const saveSpot = async (value) => {
+    try {
+      await AsyncStorage.setItem("savedSpot", value);
+      console.log(id);
+    } catch (e) {
+      // saving error
+    }
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -57,7 +70,18 @@ export default function Spot() {
           <Text>{surfBreak}</Text>
           <Text>{description}</Text>
         </View>
+        {/* <Button title="Submit" onPress={() => saveSpot(id)} /> */}
+        <Button
+          title="Save"
+          onPress={
+            !showSaveSheet
+              ? () => setShowSaveSheet(true)
+              : () => setShowSaveSheet
+          }
+        />
       </ScrollView>
+
+      {showSaveSheet && <SaveSheet visible={setShowSaveSheet} />}
     </View>
   );
 }
