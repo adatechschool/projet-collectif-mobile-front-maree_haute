@@ -39,6 +39,20 @@ export default function Page() {
     fetchData();
   }, []);
 
+ //filtre "for beginners"
+ const handleBeginnersFilter = async () => {
+    const url = POSTGRESS_URL + "?filter[difficulty_Level]=1"
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const dataFilteredByLevel1 = await response.json();
+    setData(dataFilteredByLevel1);
+    // console.log("test bouton for beginners", dataFilteredByLevel1);   
+  };
+
   const navigateToDetail = (record) => {
     // Navigate to detailed view with specified params
     router.push({
@@ -104,7 +118,7 @@ export default function Page() {
           <FiltersButton
             icon={"support"}
             text="For Beginners"
-            onPress={() => router.push("/home/searchModal")}
+            onPress={handleBeginnersFilter}
             primary={false}
           />
           <FiltersButton
