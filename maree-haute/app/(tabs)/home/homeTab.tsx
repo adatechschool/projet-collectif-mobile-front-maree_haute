@@ -27,6 +27,7 @@ export default function Page() {
     const fetchedData = await response.json();
 
     setData((prevData) => [...prevData, ...fetchedData]);
+    console.log("fetchedData", data);
   };
 
   useEffect(() => {
@@ -81,7 +82,7 @@ export default function Page() {
         renderItem={renderListItem}
         keyExtractor={(item) => item.id.toString()}
         onEndReached={fetchMoreData}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
       />
       <FloatingButton
         icon={"map"}

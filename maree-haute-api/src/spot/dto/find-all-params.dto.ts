@@ -32,7 +32,7 @@ export class FindAllParams {
     description:
       'Filtering object, for example: [Difficulty_Level]=3 to filter by Difficulty equal to 3',
     type: String,
-    example: '[{Difficulty_Level : 3}]',
+    example: '',
   })
   filter: { [key: string]: string | number | boolean };
 }
