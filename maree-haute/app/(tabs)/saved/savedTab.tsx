@@ -4,9 +4,9 @@ import { FloatingButton } from "../../components/FloatingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import SavedList from "../../components/SavedList";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function SavedTab() {
-
   const [savedLists, setSavedLists] = useState([]);
 
   const fetchSavedLists = async () => {
@@ -17,15 +17,19 @@ export default function SavedTab() {
     console.log(parsedStorage[0].savedSpotsId);
     const ids = parsedStorage[0].savedSpotsId.join(",");
   };
-  
+
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    fetchSavedLists();
-  }, []);
+    if (isFocused) {
+      fetchSavedLists();
+    }
+  }, [isFocused]);
 
   const handleOpenList = (id, name, index) => {
     router.push({
       pathname: "saved/listView",
-      params: { ids: id, name: name, index: index},
+      params: { ids: id, name: name, index: index },
     });
   };
 

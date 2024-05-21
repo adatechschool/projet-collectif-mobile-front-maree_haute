@@ -43,6 +43,7 @@ export default function ListView() {
     try {
       const storage = await AsyncStorage.getItem("savedList");
       const parsedStorage = storage ? JSON.parse(storage) : [];
+
       const listToDeleteIndex = parsedStorage.findIndex(
         (list) => list.name === name
       );
@@ -92,12 +93,16 @@ export default function ListView() {
     />
   );
 
+  console.log("mon console log", savedLists);
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>{name}</Text>
-      <TouchableOpacity onPress={deleteList}>
-        <Text style={{ color: "red", marginVertical: 20 }}>Delete</Text>
-      </TouchableOpacity>
+      {name !== "Saved" ? (
+        <TouchableOpacity onPress={deleteList}>
+          <Text style={{ color: "red", marginVertical: 20 }}>Delete</Text>
+        </TouchableOpacity>
+      ) : null}
       <FlatList
         data={savedLists}
         renderItem={renderListItem}
