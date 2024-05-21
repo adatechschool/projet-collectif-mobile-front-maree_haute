@@ -14,8 +14,6 @@ export default function SavedTab() {
     console.log("storage", storage);
     const parsedStorage = JSON.parse(storage);
     setSavedLists(parsedStorage);
-    console.log(parsedStorage[0].savedSpotsId);
-    const ids = parsedStorage[0].savedSpotsId.join(",");
   };
 
   const isFocused = useIsFocused();

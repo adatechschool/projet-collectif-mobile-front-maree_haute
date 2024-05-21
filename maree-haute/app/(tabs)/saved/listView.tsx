@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import SavedList from "../../components/SavedList";
 import { useLocalSearchParams } from "expo-router";
 import ListItem from "../../components/ListItem";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function ListView() {
   const [savedLists, setSavedLists] = useState([]);
@@ -35,27 +36,39 @@ export default function ListView() {
     console.log("texte", fetchedData);
   };
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    fetchSavedLists();
-  }, []);
+    if (isFocused) {
+      fetchSavedLists();
+    }
+  }, [isFocused]);
 
   const deleteList = async () => {
     try {
       const storage = await AsyncStorage.getItem("savedList");
-      const parsedStorage = storage ? JSON.parse(storage) : [];
+      const parsedStorage = storage
+        ? JSON.parse(storage)
+        : { name: "Saved", savedSpotsId: [] };
 
-      const listToDeleteIndex = parsedStorage.findIndex(
-        (list) => list.name === name
+      const listToDeleteIndex = parsedStorage.filter(
+        (obj) => obj.name !== name
       );
-      if (listToDeleteIndex !== -1) {
-        parsedStorage.splice(listToDeleteIndex, 1);
-        await AsyncStorage.setItem("savedList", JSON.stringify(parsedStorage));
-        setSavedLists(parsedStorage);
-        console.log("List deleted.", parsedStorage);
-        router.back();
-      } else {
-        Alert.alert("Error", "List not found");
-      }
+      await AsyncStorage.setItem(
+        "savedList",
+        JSON.stringify(listToDeleteIndex)
+      );
+      router.back();
+
+      // if (listToDeleteIndex !== -1) {
+      //   parsedStorage.splice(listToDeleteIndex, 1);
+      //   await AsyncStorage.setItem("savedList", JSON.stringify(parsedStorage));
+      //   setSavedLists(parsedStorage);
+      //   console.log("List deleted.", parsedStorage);
+      //   router.back();
+      // } else {
+      //   Alert.alert("Error", "List not found");
+      // }
     } catch (error) {
       console.error("Error deleting list", error);
     }
@@ -103,13 +116,31 @@ export default function ListView() {
           <Text style={{ color: "red", marginVertical: 20 }}>Delete</Text>
         </TouchableOpacity>
       ) : null}
-      <FlatList
-        data={savedLists}
-        renderItem={renderListItem}
-        keyExtractor={(item) => item.id}
-        onEndReached={() => console.log("End reached")}
-        onEndReachedThreshold={0.5}
-      />
+
+      {savedLists && (
+        <FlatList
+          data={savedLists}
+          renderItem={renderListItem}
+          keyExtractor={(item) => item.id}
+          onEndReached={() => console.log("End reached")}
+          onEndReachedThreshold={0.5}
+        />
+      )}
+
+      {/* {savedLists.map((item) => (
+        <ListItem
+          key={item.id}
+          imageURL={item.photos[0].url}
+          destination={item.destination}
+          destinationCountry={item.address}
+          difficulty={item.difficulty_Level}
+          startSeason={item.peak_Surf_Season_Begins}
+          endSeason={item.peak_Surf_Season_Ends}
+          surfBreak={item.surf_Break}
+          description={item.description}
+          onPress={() => navigateToDetail(item)} */}
+      {/* />
+      ))} */}
     </View>
   );
 }
