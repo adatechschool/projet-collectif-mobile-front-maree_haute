@@ -31,11 +31,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="saved"
         options={{
-          title: "Settings",
+          title: "Saved",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="settings" size={24} color={color} />
+            <MaterialIcons name="bookmark" size={24} color={color} />
           ),
           headerShown: false,
         }}
