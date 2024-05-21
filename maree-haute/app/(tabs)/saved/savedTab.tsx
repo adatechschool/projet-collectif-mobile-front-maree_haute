@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import SavedList from "../../components/SavedList";
 
 export default function SavedTab() {
+
   const [savedLists, setSavedLists] = useState([]);
+
   const fetchSavedLists = async () => {
     const storage = await AsyncStorage.getItem("savedList");
     console.log("storage", storage);
@@ -15,14 +17,15 @@ export default function SavedTab() {
     console.log(parsedStorage[0].savedSpotsId);
     const ids = parsedStorage[0].savedSpotsId.join(",");
   };
+  
   useEffect(() => {
     fetchSavedLists();
   }, []);
 
-  const handleOpenList = (id, name) => {
+  const handleOpenList = (id, name, index) => {
     router.push({
       pathname: "saved/listView",
-      params: { ids: id, name: name },
+      params: { ids: id, name: name, index: index},
     });
   };
 
@@ -30,10 +33,10 @@ export default function SavedTab() {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {savedLists.map((list, index) => (
         <SavedList
-          key={index * Math.random()}
+          key={index}
           name={list.name}
           onPress={() => {
-            handleOpenList(list.savedSpotsId, list.name);
+            handleOpenList(list.savedSpotsId, list.name, index);
           }}
           spotsIds={list.savedSpotsId.join(",")}
         />

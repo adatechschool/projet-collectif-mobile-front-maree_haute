@@ -1,4 +1,11 @@
-import { View, Text, Button, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Link, router } from "expo-router";
 import { FloatingButton } from "../../components/FloatingButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,8 +16,10 @@ import ListItem from "../../components/ListItem";
 
 export default function ListView() {
   const [savedLists, setSavedLists] = useState([]);
-  const { ids, name } = useLocalSearchParams();
+  const { ids, name, index } = useLocalSearchParams();
+
   console.log("ids", ids);
+
   const fetchSavedLists = async () => {
     const response = await fetch(
       process.env.EXPO_PUBLIC_POSTGRESS_URL + `/save?ids=${ids}`,
@@ -29,8 +38,29 @@ export default function ListView() {
   useEffect(() => {
     fetchSavedLists();
   }, []);
+
+  const deleteList = async () => {
+    try {
+      const storage = await AsyncStorage.getItem("savedList");
+      const parsedStorage = storage ? JSON.parse(storage) : [];
+      const listToDeleteIndex = parsedStorage.findIndex(
+        (list) => list.name === name
+      );
+      if (listToDeleteIndex !== -1) {
+        parsedStorage.splice(listToDeleteIndex, 1);
+        await AsyncStorage.setItem("savedList", JSON.stringify(parsedStorage));
+        setSavedLists(parsedStorage);
+        console.log("List deleted.", parsedStorage);
+        router.back();
+      } else {
+        Alert.alert("Error", "List not found");
+      }
+    } catch (error) {
+      console.error("Error deleting list", error);
+    }
+  };
+
   const navigateToDetail = (record) => {
-    // Navigate to detailed view with specified params
     router.push({
       pathname: "/home/[id]",
       params: {
@@ -46,6 +76,7 @@ export default function ListView() {
       },
     });
   };
+
   const renderListItem = ({ item }) => (
     <ListItem
       key={item.id}
@@ -60,13 +91,17 @@ export default function ListView() {
       onPress={() => navigateToDetail(item)}
     />
   );
+
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>{name}</Text>
+      <TouchableOpacity onPress={deleteList}>
+        <Text style={{ color: "red", marginVertical: 20 }}>Delete</Text>
+      </TouchableOpacity>
       <FlatList
         data={savedLists}
         renderItem={renderListItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         onEndReached={() => console.log("End reached")}
         onEndReachedThreshold={0.5}
       />
