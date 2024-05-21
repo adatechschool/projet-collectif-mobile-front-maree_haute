@@ -9,7 +9,6 @@ import {
 import { Stack, Tabs, router } from "expo-router";
 import React, { useState, useEffect } from "react";
 import ListItem from "../../components/ListItem";
-import { Link } from "expo-router";
 import { FloatingButton } from "../../components/FloatingButton";
 import { BlurView } from "expo-blur";
 import { FiltersButton } from "../../components/Buttons";
@@ -19,28 +18,41 @@ const POSTGRESS_URL = process.env.EXPO_PUBLIC_POSTGRESS_URL;
 
 export default function Page() {
   const [data, setData] = useState([]);
+  const [paginationOptions, setPaginationOptions] = useState({
+    limit: 2,
+    offset: 0,
+  });
+
   const [originalData, setOriginalData] = useState([]);
   const [isBeginnersFilterActive, setIsBeginnersFilterActive] = useState(false);
   //appelle la BDD
   const fetchData = async () => {
-    const response = await fetch(POSTGRESS_URL, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${POSTGRESS_URL}?limit=${paginationOptions.limit}&offset=${paginationOptions.offset}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const fetchedData = await response.json();
 
-    //record-> correspond à spot avec ses informations
-    // console.log("texte", fetchedData)
-    console.log("texte", fetchedData);
+    setData((prevData) => [...prevData, ...fetchedData]);
+    console.log("fetchedData", data)
     setOriginalData(fetchedData);
-    setData(fetchedData);
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [paginationOptions]);
+
+  const fetchMoreData = () => {
+    setPaginationOptions((prevOptions) => ({
+      ...prevOptions,
+      offset: prevOptions.offset + prevOptions.limit,
+    }));
+  };
 
   //filtre "for beginners"
   const handleBeginnersFilter = async () => {
@@ -84,6 +96,7 @@ export default function Page() {
   const renderListItem = ({ item }) => (
     <ListItem
       key={item.id}
+      {...item}
       imageURL={item.photos[0].url}
       destination={item.destination}
       destinationCountry={item.address}
@@ -103,7 +116,7 @@ export default function Page() {
         data={data}
         renderItem={renderListItem}
         keyExtractor={(item) => item.id.toString()}
-        onEndReached={() => console.log("End reached")}
+        onEndReached={fetchMoreData}
         onEndReachedThreshold={0.5}
       />
       <FloatingButton
