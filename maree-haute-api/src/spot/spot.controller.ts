@@ -37,6 +37,12 @@ export class SpotController {
     return this.spotService.findAll(params);
   }
 
+  @Get('save')
+  async getSpots(@Query('ids') ids: string) {
+    const idsArray = ids.split(',').map(Number);
+    return this.spotService.findMany(idsArray);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a spot by id' })
   @ApiResponse({ status: 200, description: 'Return the spot.' })

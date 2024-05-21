@@ -35,7 +35,9 @@ export class SpotService {
   async findOne(id: number) {
     return await this.spotRepository.findOne({ where: { id } });
   }
-
+  async findMany(ids: number[]) {
+    return await this.spotRepository.findByIds(ids);
+  }
   async update(id: number, updateSpotDto: UpdateSpotDto) {
     const spot = await this.findOne(id);
     if (!spot) {
