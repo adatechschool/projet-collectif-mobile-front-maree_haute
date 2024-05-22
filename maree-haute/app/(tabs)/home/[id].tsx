@@ -113,7 +113,11 @@ export default function Spot() {
       >
         <MaterialIcons name="bookmark-outline" size={25} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.7} style={styles.shareButton}>
+      <TouchableOpacity
+        onPress={() => router.push("/home/upgrade")}
+        activeOpacity={0.7}
+        style={styles.shareButton}
+      >
         <MaterialIcons name="ios-share" size={24} color="black" />
       </TouchableOpacity>
     </SafeAreaView>

@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -85,6 +86,7 @@ export default function UpgradeScreen() {
         </View>
       </ScrollView>
       <TouchableOpacity
+        onPress={() => Alert.alert("Nope", "You don't have enough money")}
         activeOpacity={0.9}
         style={{
           width: "100%",

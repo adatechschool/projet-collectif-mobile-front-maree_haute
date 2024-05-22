@@ -5,7 +5,7 @@ import { FloatingButton } from "../../components/FloatingButton";
 export default function MySpots() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>My Spots tab</Text>
+      <Text>Add spots and see them here</Text>
       <FloatingButton
         icon={"add"}
         text="Add spot"

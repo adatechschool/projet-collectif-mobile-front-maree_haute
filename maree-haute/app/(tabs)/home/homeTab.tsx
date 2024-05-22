@@ -144,13 +144,13 @@ export default function Page() {
           <FiltersButton
             icon={"favorite"}
             text="Most Popular"
-            onPress={() => router.push("/home/searchModal")}
+            onPress={() => router.push("/home/upgrade")}
             primary={false}
           />
           <FiltersButton
             icon={"explore"}
             text="Closest to you"
-            onPress={() => router.push("/home/searchModal")}
+            onPress={() => router.push("/home/upgrade")}
             primary={false}
           />
           {/* <Button title="test" onPress={() => console.log(existingList)} /> */}

@@ -8,6 +8,7 @@ export default function Layout() {
         options={{
           // Hide the header for all other routes.
           headerShown: true,
+          title: "My Spots",
         }}
       />
       <Stack.Screen
