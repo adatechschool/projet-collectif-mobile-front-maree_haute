@@ -11,11 +11,14 @@ export default function Page() {
   const [data, setData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [isBeginnersFilterActive, setIsBeginnersFilterActive] = useState(false);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(isBeginnersFilterActive ? 0 : 0);
   const limit = 5;
 
   //appelle la BDD
   const fetchData = async () => {
+    if (isBeginnersFilterActive) {
+      return;
+    }
     const response = await fetch(
       `${POSTGRESS_URL}?limit=${limit}&offset=${offset}`,
       {
@@ -50,7 +53,7 @@ export default function Page() {
       setOffset(0);
     } else {
       // If the filter is inactive, activate it by fetching filtered data
-      const url = POSTGRESS_URL + `?filter[difficulty_Level]=1`;
+      const url = POSTGRESS_URL + "?filter[difficulty_Level]=1";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -62,8 +65,8 @@ export default function Page() {
         ...item,
         id: `${item.id}-${index}`,
       }));
+      console.log("filter", dataWithUniqueKeys);
       setData(dataWithUniqueKeys);
-      setOffset((prevOffset) => prevOffset + limit);
     }
     // Toggle the filter state
     setIsBeginnersFilterActive(!isBeginnersFilterActive);
