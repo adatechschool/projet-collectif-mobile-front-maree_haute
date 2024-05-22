@@ -15,7 +15,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SaveSheet from "../../components/SaveSheet";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
-import { DifficultyLabel } from "../../components/Labels";
+import {
+  DifficultyLabel,
+  SeasonLabel,
+  SurfBreakLabel,
+} from "../../components/Labels";
 
 export default function Spot() {
   const [showSaveSheet, setShowSaveSheet] = useState(false);
@@ -43,6 +47,11 @@ export default function Spot() {
     }
   };
 
+  const formatMonth = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("default", { month: "short" });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.imageContainer}>
@@ -64,14 +73,26 @@ export default function Spot() {
           <Text style={[styles.cardHeadlineText, { fontWeight: "bold" }]}>
             {destinationCountry}
           </Text>
-          <Text>{difficulty}</Text>
-          <Text>{startSeason}</Text>
-          <Text>{endSeason}</Text>
-          <View style={styles.separator} />
-          {/* <View
-            style={{ height: 500, width: "100%", backgroundColor: "lightgray" }}
-          /> */}
-          <Text>{surfBreak}</Text>
+          <View style={styles.infoArea}>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoItemTitle}>Season</Text>
+              <SeasonLabel
+                season={`${formatMonth(startSeason)} - ${formatMonth(
+                  endSeason
+                )}`}
+              />
+            </View>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoItemTitle}>Surf Break</Text>
+              <SurfBreakLabel surfBreak={surfBreak} />
+            </View>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoItemTitle}>Difficulty</Text>
+              <DifficultyLabel difficulty={difficulty} />
+            </View>
+          </View>
+          <Text style={styles.infoItemTitle}>Description</Text>
+
           <Text>{description}</Text>
         </View>
       </ScrollView>
@@ -133,9 +154,37 @@ const styles = StyleSheet.create({
   cardTitleText: {
     fontSize: 28,
     fontWeight: "bold",
+    marginBottom: 5,
   },
   cardHeadlineText: {
     fontSize: 18,
+    marginBottom: 10,
+  },
+  infoArea: {
+    width: "100%",
+    // height: 50,
+    // backgroundColor: "grey",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "stretch",
+    marginBottom: 10,
+  },
+  infoItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    // backgroundColor: "orange",
+  },
+  infoItemTitle: {
+    fontSize: 15,
+    color: "#808080",
+    marginBottom: 5,
+  },
+  infoItemContent: {
+    fontSize: 16,
+    color: "#000000",
   },
   separator: {
     height: 1,
