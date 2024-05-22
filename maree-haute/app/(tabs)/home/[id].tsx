@@ -92,8 +92,7 @@ export default function Spot() {
             </View>
           </View>
           <Text style={styles.infoItemTitle}>Description</Text>
-
-          <Text>{description}</Text>
+          <Text style={{ fontSize: 16 }}>{description}</Text>
         </View>
       </ScrollView>
 
