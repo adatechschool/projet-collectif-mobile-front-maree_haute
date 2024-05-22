@@ -80,9 +80,15 @@ export default function SaveSheet({ visible, spotID }) {
         <ScrollView style={styles.listArea}>
           {list.map((item, index) => (
             <TouchableOpacity
-              style={styles.listItem}
+              style={[
+                styles.listItem,
+                index === list.length - 1 ? { marginBottom: 85 } : {},
+              ]}
               key={index}
-              onPress={() => handleData(index)}
+              onPress={() => {
+                handleData(index);
+                visible(false);
+              }}
             >
               <Text style={{ fontSize: 16 }}>{item.name}</Text>
             </TouchableOpacity>
