@@ -20,6 +20,8 @@ import {
   SeasonLabel,
   SurfBreakLabel,
 } from "../../components/Labels";
+import MapView from "react-native-maps";
+import { BlurView } from "expo-blur";
 
 export default function Spot() {
   const [showSaveSheet, setShowSaveSheet] = useState(false);
@@ -92,7 +94,24 @@ export default function Spot() {
             </View>
           </View>
           <Text style={styles.infoItemTitle}>Description</Text>
-          <Text style={{ fontSize: 16 }}>{description}</Text>
+          <Text style={{ fontSize: 16, marginBottom: 10 }}>{description}</Text>
+          <Text style={styles.infoItemTitle}>Location</Text>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => router.push("/home/upgrade")}
+            style={styles.mapContainer}
+          >
+            <BlurView intensity={15} tint="light" style={styles.mapBlurView} />
+            <MapView
+              initialRegion={{
+                latitude: 47.1081944444,
+                longitude: -2.10741666667,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              style={styles.map}
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
 
@@ -229,5 +248,25 @@ const styles = StyleSheet.create({
     width: 35,
     justifyContent: "center",
     alignItems: "center",
+  },
+  mapContainer: {
+    width: "100%",
+    height: 350,
+    backgroundColor: "pink",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  mapBlurView: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 10,
+    // backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  map: {
+    width: "100%",
+    height: "100%",
   },
 });
