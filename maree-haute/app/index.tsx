@@ -8,8 +8,32 @@ import {
   View,
 } from "react-native";
 import { DifficultyLabel, LargeDifficultyLabel } from "./components/Labels";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
+  const defaultSavedList = async () => {
+    try {
+      const existingList = await AsyncStorage.getItem("savedList");
+      console.log("savedList", existingList);
+      if (existingList !== null) {
+        // setExistingList(JSON.parse({ name: "Saved", savedSpotsId: [] }));
+        console.log("existingList", existingList);
+      } else {
+        const listName = [{ name: "Saved", savedSpotsId: [] }];
+        const jsonValue = JSON.stringify(listName);
+        await AsyncStorage.setItem("savedList", jsonValue);
+        // setExistingList(JSON.parse(jsonValue));
+        console.log("Else!", jsonValue);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    defaultSavedList();
+  }, []);
+
   return <Redirect href="(tabs)/home" />;
   // return (
   // <View style={Styles.container}>
