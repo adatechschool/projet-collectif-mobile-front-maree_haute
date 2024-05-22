@@ -77,7 +77,7 @@ export default function Page() {
         id: record.id,
         imageURL: record.photos[0].url,
         destination: record.destination,
-        destinationCountry: record.destination_State_Country,
+        destinationCountry: record.address,
         difficulty: record.difficulty_Level,
         startSeason: record.peak_Surf_Season_Begins,
         endSeason: record.peak_Surf_Season_Ends,

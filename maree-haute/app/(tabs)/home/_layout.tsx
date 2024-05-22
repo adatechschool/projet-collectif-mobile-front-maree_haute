@@ -14,6 +14,8 @@ export default function Layout() {
         name="[id]"
         options={{
           title: "Spot",
+          presentation: "transparentModal",
+          animation: "fade",
           headerShown: false,
           // headerTransparent: true,
         }}

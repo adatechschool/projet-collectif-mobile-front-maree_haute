@@ -7,11 +7,15 @@ import {
   ScrollView,
   Button,
   Animated,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SaveSheet from "../../components/SaveSheet";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
+import { DifficultyLabel } from "../../components/Labels";
 
 export default function Spot() {
   const [showSaveSheet, setShowSaveSheet] = useState(false);
@@ -40,7 +44,7 @@ export default function Spot() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -70,19 +74,29 @@ export default function Spot() {
           <Text>{surfBreak}</Text>
           <Text>{description}</Text>
         </View>
-        {/* <Button title="Submit" onPress={() => saveSpot(id)} /> */}
-        <Button
-          title="Save"
-          onPress={
-            !showSaveSheet
-              ? () => setShowSaveSheet(true)
-              : () => setShowSaveSheet
-          }
-        />
       </ScrollView>
 
       {showSaveSheet && <SaveSheet spotID={id} visible={setShowSaveSheet} />}
-    </View>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => router.back()}
+        style={styles.closeButton}
+      >
+        <MaterialIcons name="arrow-back" size={25} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={
+          !showSaveSheet ? () => setShowSaveSheet(true) : () => setShowSaveSheet
+        }
+        style={styles.bookmarkButton}
+      >
+        <MaterialIcons name="bookmark-outline" size={25} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.7} style={styles.shareButton}>
+        <MaterialIcons name="ios-share" size={24} color="black" />
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 }
 
@@ -127,5 +141,41 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "lightgray",
     marginVertical: 10,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    zIndex: 100,
+    backgroundColor: "white",
+    borderRadius: 50,
+    height: 35,
+    width: 35,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bookmarkButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    zIndex: 100,
+    backgroundColor: "white",
+    borderRadius: 50,
+    height: 35,
+    width: 35,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  shareButton: {
+    position: "absolute",
+    top: 50,
+    right: 70,
+    zIndex: 100,
+    backgroundColor: "white",
+    borderRadius: 50,
+    height: 35,
+    width: 35,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
