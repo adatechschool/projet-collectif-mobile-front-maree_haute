@@ -31,6 +31,15 @@ export default function Layout() {
           ),
         }}
       />
+
+      <Stack.Screen
+        name="upgrade"
+        options={{
+          title: "Upgrade",
+          headerShown: false,
+          presentation: "modal",
+        }}
+      />
     </Stack>
   );
 }

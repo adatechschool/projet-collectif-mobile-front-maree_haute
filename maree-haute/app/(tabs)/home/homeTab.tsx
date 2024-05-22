@@ -118,7 +118,7 @@ export default function Page() {
       <FloatingButton
         icon={"map"}
         text="Map"
-        onPress={() => router.push("/mySpots")}
+        onPress={() => router.push("/home/upgrade")}
       />
       <View style={styles.filterContainer}>
         <ScrollView

@@ -12,6 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import { DropDown } from "../../components/DropDown";
 import { DifficultyLabel, LargeDifficultyLabel } from "../../components/Labels";
 import { FiltersButton } from "../../components/Buttons";
+import { router } from "expo-router";
 
 export default function searchModal() {
   const [filter, setFilter] = useState("");
@@ -88,7 +89,7 @@ export default function searchModal() {
         <Button title="Clear Filters" onPress={() => console.log("clear")} />
         <FiltersButton
           icon={"search"}
-          onPress={() => console.log("search")}
+          onPress={() => router.push("/home/upgrade")}
           text="Search"
         />
       </View>
