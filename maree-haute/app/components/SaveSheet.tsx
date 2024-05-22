@@ -1,8 +1,17 @@
-import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
+import { FloatingButton } from "./FloatingButton";
 
 export default function SaveSheet({ visible, spotID }) {
   const [list, setList] = useState([]);
@@ -39,12 +48,17 @@ export default function SaveSheet({ visible, spotID }) {
 
   return (
     <TouchableOpacity
+      // activeOpacity={1}
       onPress={() => {
         visible(false);
       }}
       style={styles.container}
     >
-      <View style={styles.card}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {}}
+        style={styles.card}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -54,7 +68,6 @@ export default function SaveSheet({ visible, spotID }) {
           }}
         >
           <Text style={{ fontSize: 20 }}>Save to a list</Text>
-
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
@@ -64,22 +77,33 @@ export default function SaveSheet({ visible, spotID }) {
             <MaterialIcons name="close" size={27} color="black" />
           </TouchableOpacity>
         </View>
-
-        {list.map((item, index) => (
-          <Button
-            key={index}
-            title={item.name}
-            onPress={() => handleData(index)}
-          />
-        ))}
-        {/* <Button
-          title="Save"
+        <ScrollView style={styles.listArea}>
+          {list.map((item, index) => (
+            <TouchableOpacity
+              style={styles.listItem}
+              key={index}
+              onPress={() => handleData(index)}
+            >
+              <Text style={{ fontSize: 16 }}>{item.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        <FloatingButton
+          icon="add"
+          text="New list"
           onPress={() => {
-            visible(false);
-            console.log(list);
+            router.push("/saved/listModal");
           }}
-        /> */}
-      </View>
+        />
+        {/* <TouchableOpacity
+          style={styles.newListButton}
+          onPress={() => {
+            router.push("/saved/listModal");
+          }}
+        >
+          <Text>TEST</Text>
+        </TouchableOpacity> */}
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 }
@@ -101,11 +125,29 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     position: "absolute",
-    height: 300,
+    height: 400,
     bottom: 0,
     left: 0,
     right: 0,
     backgroundColor: "white",
     zIndex: 103,
+  },
+  listArea: {
+    // backgroundColor: "red",
+    paddingHorizontal: 20,
+    height: "100%",
+    width: "100%",
+  },
+  listItem: {
+    padding: 10,
+    borderWidth: 1.5,
+    borderColor: "black",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  newListButton: {
+    backgroundColor: "green",
+    padding: 10,
+    borderRadius: 10,
   },
 });
