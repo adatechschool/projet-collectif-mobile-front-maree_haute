@@ -1,4 +1,4 @@
-# Mobile app " Marée Haute " ("High Tide")
+# Mobile app " Marée Haute 🌊 " ("High Tide")
 
 badges
 made with Expo Go
@@ -9,12 +9,19 @@ made with React Native
 In a first time :
 We've created an Android app that references the world's best surf spots 🏄.
 The aim is to discover the mobile and its approach. It was completed in 7 days by a team of 4 people in an agile environment.
-(images/GIF)
+
+
+<img src="https://github.com/adatechschool/projet-collectif-mobile-front-maree_haute/assets/146881805/86693df9-4d32-41a3-a53d-36e12be99804" alt="listSpots" width="200">
+
+<img src="https://github.com/adatechschool/projet-collectif-mobile-front-maree_haute/assets/146881805/aac9c9c9-65bb-43c4-9a44-1b2bdcbb289a" alt="detailSpot" width="200">
+
+<img src="https://github.com/adatechschool/projet-collectif-mobile-front-maree_haute/assets/146881805/2c065d27-32c8-4aa2-a6f2-7300bb709ba6"
+width="200">
+
 
 In a second time :
 We focused on the back of the app during the same amount of time.
-The aim is to discover
-(images/GIF)
+(GIF)
 
 ## Topics covered
 
